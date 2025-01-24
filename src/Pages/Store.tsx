@@ -59,12 +59,11 @@ function Store() {
           <StoreFilters setProducts={setProducts} />
 
           {/* Cards and container */}
-          <Grid2 container   sx={{ padding: 2 }}>
+          <Grid2 container   sx={{ padding: 2}}>
             {products.map((product: Product, index) => {
               return (
-                <Grid2   sx={{ margin: "10px" }}>
+                <Grid2 key={index}  sx={{ }}>
                 <ProductCard
-                  key={index}
                   product={product}
                   addtoCart={addToCart}
                   loggedUserCartId={loggedUserCartId}

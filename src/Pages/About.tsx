@@ -39,10 +39,10 @@ function About() {
       <Nav />
 
       <Box >
-        <Box sx={{ top: "67px", margin: "100px 0" ,}}>
+        <Box sx={{ top: "67px", margin: "100px 0" ,position:"sticky"}}>
           <Typography
             variant="h2"
-            sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 }}
+            sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 , }}
           >
             Canvas & Chaos
           </Typography>
@@ -71,7 +71,7 @@ function About() {
             its own story. So, why just admire art when you can wear it, live
             it, and share it with the world? Welcome to the chaos.
           </Typography>
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center" , margin:4}}>
             <iframe
               width="560"
               height="315"

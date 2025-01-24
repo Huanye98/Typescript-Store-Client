@@ -9,10 +9,10 @@ function Admin() {
     price: 0,
     description: "",
     isavaliable: "false",
-    discountvalue: 0,
+    discountvalue: 1,
     imageurl: "",
     category: "",
-    collection_id: 0,
+    collection_id: 1,
     is_featured: "false",
     stock: 0,
   };
@@ -174,7 +174,7 @@ function Admin() {
                 <MenuItem value="">Select</MenuItem>
                 <MenuItem value="Apparel">Apparel</MenuItem>
                 <MenuItem value="Home goods">Home goods</MenuItem>
-                <MenuItem value="Digital goods">Digital goods</MenuItem>
+                <MenuItem value='Digital goods'>Digital goods</MenuItem>
                 <MenuItem value="Print">Print</MenuItem>
               </Select>
             </FormControl>

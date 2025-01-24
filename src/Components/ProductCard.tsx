@@ -39,6 +39,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
         transition: "background-color 0.5s ease",
         display:"flex",
         justifyContent:"space-between",
+        willChange:"transform",
         flexDirection:"column",
         "&:hover": {
           transform: "scale(1.05)",
@@ -51,14 +52,14 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
           <CardMedia
             component="img"
             image={imageurl}
-            height="140"
+            height="50%"
             sx={{ objectFit: "cover" }}
             alt={name}
           />
         )}
-        <CardContent>
+        <CardContent sx={{height:"120px" , display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
           <Typography>{name}</Typography>
-          <Typography>{finalPrice}</Typography>
+          <Typography>{parseInt(finalPrice).toFixed(2)}€</Typography>
         </CardContent>
       </Link>
       <Button
