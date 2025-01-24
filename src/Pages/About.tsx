@@ -38,8 +38,8 @@ function About() {
     <>
       <Nav />
 
-      <Box>
-        <Box sx={{ top: "67px", position: "sticky", margin: "100px 0" }}>
+      <Box >
+        <Box sx={{ top: "67px", margin: "100px 0" ,}}>
           <Typography
             variant="h2"
             sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 }}
@@ -85,10 +85,11 @@ function About() {
           </Box>
           <Typography variant="h3">Artists</Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
-            {artists.map((e) => {
+            {artists.map((e,index) => {
               return (
                 <Card>
                   <CardMedia
+                  key={index}
                     component="img"
                     image="647.webp"
                     sx={{ width: "250px" }}

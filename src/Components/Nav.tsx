@@ -14,11 +14,8 @@ import {
   Typography,
   InputAdornment,
   Button,
-  Popover,
-  MenuItem,
 } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import SearchIcon from "@mui/icons-material/Search";
 
 function Nav() {
@@ -70,24 +67,8 @@ function Nav() {
     }
   };
 
-  //popover
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
   return (
-    <AppBar sx={{ top: 0, backgroundColor: "primary", position: "sticky" }}>
+    <AppBar position="sticky">
       <Toolbar
         sx={{
           display: "flex",
@@ -96,8 +77,15 @@ function Nav() {
           alignItems: "center",
         }}
       >
+        {/* main pages*/}
+        <Link to={"/"}>
+          <img
+            src="public/Recurso-1.webp"
+            style={{ width: "60px", margin: "0 20px" }}
+          />
+        </Link>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Link to={"/"}>
+        <Link to={"/"}>
             <Typography>Main</Typography>
           </Link>
           <Link to={"/Store"}>
@@ -123,70 +111,95 @@ function Nav() {
                   </Link>
                 </>
               )}
-              <Button
-                variant="contained"
-                color="secondary.main"
-                onClick={handleLogOut}
-              >
-                LogOut
-              </Button>
-            </>
-          )}
-
-          {!isLoggedIn && (
-            <>
-              <Link to={"/login"}>
-                <Typography>Login</Typography>
-              </Link>
-              <Link to={"/signup"}>
-                <Typography>Sign Up</Typography>
-              </Link>
             </>
           )}
         </Box>
 
-        <Box sx={{ display: "flex"}}>
-          <TextField
-            variant="outlined"
-            type="text"
-            value={searchQuery}
-            onChange={handleInputChange}
-            placeholder="Search for products..."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          {isLoading && <p>Loading...</p>}
-          {error && <p className="error">{error}</p>}
+       
+          {/* Searchbar +  Aut */}
+        <Box sx={{ display: "flex", flexDirection:"row" }}>
+          <Box>
+            {/* SearchBr */}
+            <TextField
+              variant="outlined"
+              type="text"
+              value={searchQuery}
+              onChange={handleInputChange}
+              placeholder="Search for products..."
+              sx={{ height: "60px", borderRadius: "50%" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {isLoading && <p>Loading...</p>}
+            {error && <p className="error">{error}</p>}
+              {/* REsults */}
+            <Box
+              sx={{
+                position: "absolute",
+                width: "277px",
+                top: "100%",
+                right: 63,
+                maxHeight: 200,
+                overflowY: "auto",
+                zIndex: 9999,
+                backgroundColor: "white",
+                boxShadow: 2,
+              }}
+            >
+              {filteredData.slice(0, 10).map((e) => (
+                <Link to={`/store/${e.id}`}>
+                  <Box key={e.id} sx={{ zIndex: 3 }}>
+                    {e.name}
+                  </Box>
+                </Link>
+              ))}
+            </Box>
+            </Box>
 
-          <Box
-            sx={{
-              position: "absolute", 
-              width:"277px",
-              top: "100%",  
-              right: 63, 
-              maxHeight: 200, 
-              overflowY: "auto", 
-              zIndex: 9999, 
-              backgroundColor: "white", 
-              boxShadow: 2, 
-            }}
-          >
-            {filteredData.slice(0, 10).map((e) => (
-              <Link to={`/store/${e.id}`}>
-                <Box key={e.id} sx={{ zIndex: 3 }}>
-                  {e.name}
+            {/* Auth */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                margin:"0 15px",
+              }}
+            >
+              {!isLoggedIn && (
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Link to={"/login"}>
+                    <Button
+                      variant="contained"
+                      sx={{ color: "black", width: "100px" }}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to={"/signup"}>
+                    <Button
+                      variant="contained"
+                      sx={{ color: "black", width: "100px" }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
                 </Box>
-              </Link>
-            ))}
-          </Box>
-          <IconButton>
-            <MenuIcon />
-          </IconButton>
+              )}
+              {isLoggedIn && (
+                <Button
+                  variant="contained"
+                  color="secondary.main"
+                  onClick={handleLogOut}
+                >
+                  LogOut
+                </Button>
+              )}
+            </Box>
         </Box>
       </Toolbar>
     </AppBar>

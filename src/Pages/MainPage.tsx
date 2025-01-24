@@ -33,6 +33,7 @@ function MainPage() {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
+
   };
 
   const timeQuery = {
@@ -95,15 +96,16 @@ function MainPage() {
       <Nav />
       <Box>
         <Box className="landingImage">
-          <img src="Sin título-1.png" alt="" style={{ width: "100vw" }} />
+          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
         </Box>
 
         <Box className="landingScrollingText"></Box>
         <Typography> newArrivals</Typography>
+        <Box sx={{width:"1250PX", textAlign:"center", }}>
         <Slider {...settings} style={style}>
           {newArrivals.map((product, index) => {
             return (
-              <Card key={index}>
+              <Card key={index}sx={{margin: "0 10px"}}>
                 <Link to={`/store/${product.id}`}>
                   <CardMedia component="img" image={product.imageurl} />
                 </Link>
@@ -116,12 +118,13 @@ function MainPage() {
             );
           })}
         </Slider>
+        </Box>
         <Box
           className="LandingfeaturedCollection"
           sx={{ border: "1px solid blue" }}
         >
           featuredCollection
-          <img src="Sin título-1.png" alt="" style={{ width: "100vw" }} />
+          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
         </Box>
         <Typography>Featured </Typography>
         <Slider {...settings} style={style}>
@@ -148,7 +151,7 @@ function MainPage() {
 
         <Box className="landingAbout" sx={{ border: "1px solid blue" }}>
           Abouot
-          <img src="Sin título-1.png" alt="" style={{ width: "100vw" }} />
+          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
         </Box>
         <Typography> Hot!</Typography>
         <Slider {...settings} style={style}>

@@ -10,7 +10,14 @@ import { AuthContext } from "../context/auth.contex";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Button, Container, Typography, TextField, Divider } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  TextField,
+  Divider,
+} from "@mui/material";
 
 interface Product {
   name: string;
@@ -172,7 +179,7 @@ function ProductPage() {
               </Typography>
             )}
             {/* Add to cart */}
-            {!isAdmin && isLoggedIn && productData.isavaliable &&(
+            {!isAdmin && isLoggedIn && productData.isavaliable && (
               <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 2 }}>
                 <TextField
                   label="Quantity"
@@ -184,26 +191,41 @@ function ProductPage() {
                   variant="outlined"
                   fullWidth
                 />
-                <Button
-                  variant="outlined"
-                  onClick={() =>
-                    handleAdd(productId, amount, loggedUserId, loggedUserCartId)
-                  }
-                  sx={{ color: "black", backgroundColor: "secondary.main" }}
-                >
-                  Add to cart
-                </Button>
               </Box>
             )}
+            {isLoggedIn && productData.isavaliable  && (
+              <Button
+                variant="outlined"
+                onClick={() =>
+                  handleAdd(productId, amount, loggedUserId, loggedUserCartId)
+                }
+                sx={{ color: "black", backgroundColor: "salmon" }}
+              >
+                Add to cart
+              </Button>
+            )}
+
+            {!isLoggedIn && (
+              <Button
+                variant="outlined"
+                onClick={() => navigate("/login")}
+                sx={{ color: "black", backgroundColor: "secondary.main" }}
+              >
+                Add to cart
+              </Button>
+            )}
+
           </Box>
         </Box>
-        <Divider sx={{margin:"30px 0"}}/>
+        <Divider sx={{ margin: "30px 0" }} />
         {/* Related products */}
         <Box>
           <Typography>Related products</Typography>
           <Slider {...settings}>
             {relatedProducts
-              .filter((product) => product.id.toString() !== productId.toString())
+              .filter(
+                (product) => product.id.toString() !== productId.toString()
+              )
               .map((product) => {
                 return (
                   <ProductCard
@@ -219,25 +241,9 @@ function ProductPage() {
         </Box>
         {/* Admin update product form */}
         <Box>
-          {!isLoggedIn && (
-            <>
-              <Box>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setAmount(e.target.value)
-                  }
-                />
-              </Box>
-              <Button variant="outlined" onClick={() => navigate("/login")}>
-                Add to cart
-              </Button>
-            </>
-          )}
           {isAdmin && isLoggedIn && (
             <>
-            <Divider sx={{margin:"30px 0"}}/>
+              <Divider sx={{ margin: "30px 0" }} />
               <ProductUpdateForm
                 productId={productId}
                 handleDelete={handleDelete}

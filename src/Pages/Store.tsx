@@ -50,8 +50,8 @@ function Store() {
   return (
     <>
       <Nav />
-        <Box className="StoreHeader" sx={{ "& img": { width: "100vw",left:"0", zIndex:2} }}>
-          <img src="/Sin título-1.png" alt="" />
+        <Box className="StoreHeader" sx={{ "& img": { width: "100%",maxWidth:"1920",left:"0", zIndex:2} }}>
+          <img src="/Sin título-1.webp" alt="" />
         </Box>
       <Container sx={{postiion:"relative"}}>
 
@@ -59,10 +59,10 @@ function Store() {
           <StoreFilters setProducts={setProducts} />
 
           {/* Cards and container */}
-          <Grid2 container >
+          <Grid2 container   sx={{ padding: 2 }}>
             {products.map((product: Product, index) => {
               return (
-                <Grid2 >
+                <Grid2   sx={{ margin: "10px" }}>
                 <ProductCard
                   key={index}
                   product={product}
