@@ -51,7 +51,11 @@ function ProductPage() {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-
+  const style = {
+    maxWidth: "100vw",
+    margin: "10px auto",
+    border: "1px solid red",
+  };
   useEffect(() => {
     console.log(productId);
     if (productId) {
@@ -60,6 +64,8 @@ function ProductPage() {
       console.log(productId);
     }
   }, [productId]);
+
+
 
   const deleteProduct = async () => {
     if (!productId) {
@@ -110,6 +116,7 @@ function ProductPage() {
     }
   };
 
+  
   const fetchRelatedProducts = async (relatedCategory) => {
     try {
       const response = await service.get("/products", {
@@ -193,7 +200,7 @@ function ProductPage() {
                 />
               </Box>
             )}
-            {isLoggedIn && productData.isavaliable  && (
+            {isLoggedIn && productData.isavaliable && (
               <Button
                 variant="outlined"
                 onClick={() =>
@@ -204,7 +211,6 @@ function ProductPage() {
                 Add to cart
               </Button>
             )}
-
             {!isLoggedIn && (
               <Button
                 variant="outlined"
@@ -214,18 +220,15 @@ function ProductPage() {
                 Add to cart
               </Button>
             )}
-
           </Box>
         </Box>
         <Divider sx={{ margin: "30px 0" }} />
         {/* Related products */}
         <Box>
           <Typography>Related products</Typography>
-          <Slider {...settings}>
+          <Slider {...settings} style={style}>
             {relatedProducts
-              .filter(
-                (product) => product.id.toString() !== productId.toString()
-              )
+              
               .map((product) => {
                 return (
                   <ProductCard

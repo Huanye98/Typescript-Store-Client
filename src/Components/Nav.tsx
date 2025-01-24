@@ -126,7 +126,7 @@ function Nav() {
               value={searchQuery}
               onChange={handleInputChange}
               placeholder="Search for products..."
-              sx={{ height: "60px", borderRadius: "50%" }}
+              sx={{ height: "60px", borderRadius: 50 }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

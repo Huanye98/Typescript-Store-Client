@@ -33,7 +33,10 @@ function MainPage() {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
-
+  };
+  const style = {
+    maxWidth: "100vw",
+    margin: "10px auto",
   };
 
   const timeQuery = {
@@ -47,12 +50,6 @@ function MainPage() {
   const featuredQuery = {
     is_featured: true,
     limit: 5,
-  };
-
-  const style = {
-    maxWidth: "100vw",
-    margin: "0 auto",
-    border: "1px solid red",
   };
 
   useEffect(() => {
@@ -94,45 +91,44 @@ function MainPage() {
   return (
     <>
       <Nav />
-      <Box>
+      <Container>
         <Box className="landingImage">
-          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
+          <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
         </Box>
 
         <Box className="landingScrollingText"></Box>
         <Typography> newArrivals</Typography>
-        <Box sx={{width:"1250PX", textAlign:"center", }}>
-        <Slider {...settings} style={style}>
-          {newArrivals.map((product, index) => {
-            return (
-              <Card key={index}sx={{margin: "0 10px"}}>
-                <Link to={`/store/${product.id}`}>
-                  <CardMedia component="img" image={product.imageurl} />
-                </Link>
-                <CardContent>
+        <Box >
+          <Slider {...settings} style={style}>
+            {newArrivals.map((product, index) => {
+              return (
+                <Card key={index} sx={{width:'300px !important'}}>
                   <Link to={`/store/${product.id}`}>
-                    <Typography>{product.name}</Typography>
+                    <CardMedia component="img" image={product.imageurl} />
                   </Link>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </Slider>
+                  <CardContent>
+                    <Link to={`/store/${product.id}`}>
+                      <Typography>{product.name}</Typography>
+                    </Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </Slider>
         </Box>
         <Box
           className="LandingfeaturedCollection"
-          sx={{ border: "1px solid blue" }}
         >
           featuredCollection
-          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
+          <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
         <Slider {...settings} style={style}>
           {featuredItems.length > 0 ? (
             featuredItems.map((product, index) => {
               return (
-                <Link to={`/store/${product.id}`}>
-                  <Card key={index}>
+                <Card key={index} sx={{width:'300px !important'}}>
+                  <Link to={`/store/${product.id}`}>
                     <CardMedia component="img" image={product.imageurl} />
                     <CardContent>
                       <Typography>{product.name}</Typography>
@@ -140,8 +136,8 @@ function MainPage() {
                         Shop now <ArrowOutwardIcon />
                       </Typography>
                     </CardContent>
-                  </Card>
-                </Link>
+                  </Link>
+                </Card>
               );
             })
           ) : (
@@ -149,7 +145,7 @@ function MainPage() {
           )}
         </Slider>
 
-        <Box className="landingAbout" sx={{ border: "1px solid blue" }}>
+        <Box className="landingAbout" >
           Abouot
           <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
         </Box>
@@ -157,8 +153,8 @@ function MainPage() {
         <Slider {...settings} style={style}>
           {popularItems.map((product, index) => {
             return (
-              <Link to={`/store/${product.id}`}>
-                <Card key={index}>
+              <Card key={index} sx={{width:'300px !important'}} >
+                <Link to={`/store/${product.id}`}>
                   <CardMedia component="img" image={product.imageurl} />
                   <CardContent>
                     <Typography>{product.name}</Typography>
@@ -166,12 +162,12 @@ function MainPage() {
                       Shop now <ArrowOutwardIcon />
                     </Typography>
                   </CardContent>
-                </Card>
-              </Link>
+                </Link>
+              </Card>
             );
           })}
         </Slider>
-      </Box>
+      </Container>
       <Footer />
     </>
   );

@@ -5,15 +5,6 @@
 }
 
 
-.landingPage{
-  display: flex;
-  flex-direction: column;
-}
-.landingPage *{
-  width: 100vw;
-  height: 300px;
-
-}
 .productCard{
 
   width: 300px;

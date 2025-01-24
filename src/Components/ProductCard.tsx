@@ -4,6 +4,7 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  Chip
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Product } from "../Types/Types";
@@ -26,7 +27,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
   loggedUserId,
   loggedUserCartId,
 }) => {
-  const { id, name, imageurl, finalPrice } = product;
+  const { id, name, imageurl, finalPrice, category } = product;
   const { addToCart } = utils;
   return (
     <Card
@@ -57,6 +58,17 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
             alt={name}
           />
         )}
+        {category === "Digital goods" && <Chip
+        label="Digital"
+        color="secondary"
+        sx={{
+          position: 'absolute',
+          top: 16,
+          left: 16,
+          zIndex: 1,
+          fontWeight: 'bold',
+        }}
+      />}
         <CardContent sx={{height:"120px" , display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
           <Typography>{name}</Typography>
           <Typography>{parseInt(finalPrice).toFixed(2)}€</Typography>
