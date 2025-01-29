@@ -3,12 +3,11 @@ import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import service from "../service/service.config";
 import StoreFilters from "../Components/StoreFilters";
-import utils from "../utils";
 import { AuthContext } from "../context/auth.contex";
 import { Box, Button, Container, Grid2 } from "@mui/material";
 import ProductCard from "../Components/ProductCard";
 import { Product } from "../Types/Types";
-import { Height } from "@mui/icons-material";
+
 
 function Store() {
   const { loggedUserId, loggedUserCartId, addToCart } = useContext(AuthContext);

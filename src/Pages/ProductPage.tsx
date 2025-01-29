@@ -3,7 +3,6 @@ import Nav from "../Components/Nav";
 import ProductUpdateForm from "../Components/Admin/ProductUpdateForm";
 import ProductCard from "../Components/ProductCard";
 import service from "../service/service.config";
-import utils from "../utils";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.contex";

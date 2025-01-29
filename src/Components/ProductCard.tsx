@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Product } from "../Types/Types";
-import utils from "../utils";
 import { AuthContext } from "../context/auth.contex";
 import { useContext } from "react";
 interface ProductCardComponentProps {
