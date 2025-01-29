@@ -10,13 +10,19 @@ interface AuthContextProps{
     loggedUserCartId: number|null;
     isAdmin: boolean;
     authenticateUser: ()=> Promise<void>;
+    cartCount:number;
+    fetchCart:()=> Promise<void>;
+    addToCart:()=> Promise<void>;
 }
 const defaultAuthContext: AuthContextProps ={
     isLoggedIn: false,
     loggedUserId: null,
     loggedUserCartId:null,
     isAdmin: false,
-    authenticateUser: async ()=> {}
+    authenticateUser: async ()=> {},
+    cartCount:0,
+    fetchCart:async ()=> {},
+    addToCart:async ()=> {},
 }
 
 const AuthContext = createContext(defaultAuthContext)
@@ -27,6 +33,8 @@ const [loggedUserId, setLoggedUserId] = useState(null);
 const [loggedUserCartId, setLoggedUserCartId] = useState(null);
 const [isAuthenticating, setIsAuthenticating] = useState(true);
 const [isAdmin, setIsAdmin] = useState(false);
+const [cartCount, setCartCount] = useState(0);
+
 const authenticateUser = async ()=>{
     const token = localStorage.getItem("token")
     if(!token){
@@ -65,15 +73,50 @@ const authenticateUser = async ()=>{
     }
 }
 
+const fetchCart = async (userId:number) => {
+    try {
+      userId
+      const response = await service.get(`/users/${userId}`);
+      const fetchedCart = response.data.response[0].cart_items 
+      const totalQuantity = fetchedCart.reduce((total,item)=>total + item.quantity, 0)
+      setCartCount(totalQuantity)  
+      console.log("fetchCart")
+    }catch(error){
+        console.log(error)
+    }
+  }
+  const addToCart = async (itemId, quantity,userId,cartId) => {
+    const payload = {
+      product_id: itemId,
+      quantity:quantity,
+      user_id: userId,
+      cart_id: cartId
+    };
+    console.log(payload)
+    try {
+      const response = await service.post("/users/cart", payload);
+      await fetchCart(loggedUserId)
+      console.log("product added")
+      return { success: true, data: response.data }
+    } catch (error) {
+      console.log("was not able to add to cart", error);
+      return { success: false, error: error.response?.data || error.message }
+    }
+  };
+
 const passedContext = {
     isLoggedIn,
     loggedUserId,
     loggedUserCartId,
     isAdmin,
-    authenticateUser
+    authenticateUser,
+    cartCount,
+    fetchCart,
+    addToCart
 }
 useEffect(()=>{
 authenticateUser()
+
 },[])
 
 if(isAuthenticating){

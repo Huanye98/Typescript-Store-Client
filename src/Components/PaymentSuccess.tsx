@@ -8,11 +8,12 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {loggedUserCartId} = useContext(AuthContext)
+  const {loggedUserCartId,loggedUserId,fetchCart} = useContext(AuthContext)
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     handleUseEffect();
+    fetchCart(loggedUserId)
   }, []);
 
   const handleUseEffect = async () => {

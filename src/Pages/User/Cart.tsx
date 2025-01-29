@@ -2,17 +2,15 @@ import Nav from "../../Components/Nav";
 import { useEffect, useState, useContext } from "react";
 import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
-import utils from "../../utils";
 import { Link } from "react-router-dom";
 import PaymentIntent from "../../Components/PaymentIntent";
-import { Box, Button, Card, CardContent, CardMedia, Container, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { Height } from "@mui/icons-material";
+import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
+
 
 function Cart() {
-  const { addToCart } = utils;
+
   const [userData, setUserData] = useState(null);
-  const { loggedUserId, loggedUserCartId } = useContext(AuthContext);
+  const { loggedUserId, loggedUserCartId,addToCart,fetchCart } = useContext(AuthContext);
   const [cart, setCart] = useState([]);
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
   const [stripeData, setStripeData] = useState(null);
@@ -63,6 +61,7 @@ function Cart() {
     try {
       await service.delete("/users/cart/", { data: body });
       fetchUserData();
+      fetchCart(loggedUserId)
     } catch (error) {
       console.error("Failed to delete item from cart:", error);
     }

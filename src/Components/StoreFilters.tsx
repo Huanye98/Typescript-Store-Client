@@ -9,13 +9,8 @@ import {
   MenuItem,
 } from "@mui/material";
 
-function StoreFilters({ setProducts }) {
-  const [filterData, setFilterData] = useState({
-    sort: "",
-    collection: "",
-    category: "",
-    isavaliable: "",
-  });
+function StoreFilters({ setProducts,filterData, setFilterData, setPage }) {
+  
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -50,7 +45,8 @@ function StoreFilters({ setProducts }) {
     const url = `/products?${queryParams}`;
     console.log(url);
     try {
-      const response = await service.get(url);
+      const response = await service.get(url,{params:{limit:9,page:1}});
+      setPage(1)
       console.log("filtered products", response.data);
       setProducts(response.data.products);
     } catch (error) {
@@ -113,8 +109,8 @@ function StoreFilters({ setProducts }) {
               <MenuItem value="name:desc">Name descending</MenuItem>
               <MenuItem value="popular:asc">Popular ascending</MenuItem>
               <MenuItem value="popular:desc">Popular descending</MenuItem>
-              <MenuItem value="recency:asc">Recency ascending</MenuItem>
-              <MenuItem value="recency:desc">Recency descending</MenuItem>
+              <MenuItem value="created_at:asc">Recency ascending</MenuItem>
+              <MenuItem value="created_at:desc">Recency descending</MenuItem>
             </Select>
           </FormControl>
 
@@ -145,7 +141,7 @@ function StoreFilters({ setProducts }) {
             <InputLabel id="availability-label">Availability</InputLabel>
             <Select
               labelId="availability-label"
-              name="isAvaliable"
+              name="isavaliable"
               value={filterData.isavaliable}
               onChange={handleInputChange}
               label="Availability"

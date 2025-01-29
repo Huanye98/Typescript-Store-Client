@@ -9,7 +9,8 @@ import {
 import { Link } from "react-router-dom";
 import { Product } from "../Types/Types";
 import utils from "../utils";
-
+import { AuthContext } from "../context/auth.contex";
+import { useContext } from "react";
 interface ProductCardComponentProps {
   product: Product;
   addToCart: (
@@ -29,7 +30,8 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
 }) => {
   const { id, name, imageurl, finalPrice, category, isavaliable, stock } =
     product;
-  const { addToCart } = utils;
+ 
+  const {fetchCart,addToCart} = useContext(AuthContext)
   return (
     <Card
       className="productCard"
@@ -104,7 +106,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
           "&:hover": { backgroundColor: "secondary.main" },
         }}
         onClick={() => {
-          addToCart(id, 1, loggedUserId, loggedUserCartId);
+          addToCart(id, 1, loggedUserId, loggedUserCartId),fetchCart();
         }}
       >
         Add to cart

@@ -11,13 +11,17 @@ import { Product } from "../Types/Types";
 import { Height } from "@mui/icons-material";
 
 function Store() {
-  const { loggedUserId, loggedUserCartId } = useContext(AuthContext);
-  const { addToCart } = utils;
+  const { loggedUserId, loggedUserCartId, addToCart } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
+  const [filterData, setFilterData] = useState({
+    sort: "",
+    collection: "",
+    category: "",
+    isavaliable: "",
+  });
   useEffect(() => {
     getProducts(page);
   }, [page]);
@@ -28,13 +32,20 @@ function Store() {
 
   const getProducts = async (pagination: number) => {
     try {
-      const response = await service.get("/products/", {
-        params: { limit: 9, page: pagination },
-      });
+      setIsLoading(true);
+
+      let params: Record<string, any> = { limit: 9, page: pagination };
+      if (filterData) {
+        Object.entries(filterData).forEach(([key, value]) => {
+          if (value !== "") params[key] = value; // Only add non-empty filters
+        });
+      }
+      console.log(params)
+      const response = await service.get("/products", { params });
+
       setProducts(response.data.products);
       setTotalPages(Math.ceil(response.data.totalCount / 10));
-      setIsLoading(false);
-      console.log(response.data);
+      setIsLoading(false)
     } catch (error) {
       console.log("was not able to get products", error);
     }
@@ -50,25 +61,34 @@ function Store() {
   return (
     <>
       <Nav />
-        <Box className="StoreHeader" sx={{ "& img": { width: "100%",maxWidth:"1920",left:"0", zIndex:2} }}>
-          <img src="/Sin título-1.webp" alt="" />
-        </Box>
-      <Container sx={{postiion:"relative"}}>
-
-        <Box >
-          <StoreFilters setProducts={setProducts} />
+      <Box
+        className="StoreHeader"
+        sx={{
+          "& img": { width: "100%", maxWidth: "1920", left: "0", zIndex: 2 },
+        }}
+      >
+        <img src="/Sin título-1.webp" alt="" />
+      </Box>
+      <Container sx={{ postiion: "relative" }}>
+        <Box>
+          <StoreFilters
+            setProducts={setProducts}
+            filterData={filterData}
+            setFilterData={setFilterData}
+            setPage={setPage}
+          />
 
           {/* Cards and container */}
-          <Grid2 container   sx={{ padding: 2}}>
+          <Grid2 container sx={{ padding: 2 }}>
             {products.map((product: Product, index) => {
               return (
-                <Grid2 key={index}  sx={{ }}>
-                <ProductCard
-                  product={product}
-                  addtoCart={addToCart}
-                  loggedUserCartId={loggedUserCartId}
-                  loggedUserId={loggedUserId}
-                />
+                <Grid2 key={index} sx={{}}>
+                  <ProductCard
+                    product={product}
+                    addtoCart={addToCart}
+                    loggedUserCartId={loggedUserCartId}
+                    loggedUserId={loggedUserId}
+                  />
                 </Grid2>
               );
             })}
@@ -115,7 +135,6 @@ function Store() {
               </Button>
             )}
           </Box>
-          
         </Box>
       </Container>
       <Footer />

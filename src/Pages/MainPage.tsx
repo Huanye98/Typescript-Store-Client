@@ -15,7 +15,6 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import utils from "../utils";
 import { AuthContext } from "../context/auth.contex";
 import { Link } from "react-router-dom";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
@@ -25,7 +24,7 @@ function MainPage() {
   const [newArrivals, setNewArrivals] = useState([]);
   const [popularItems, setPopularItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
-  const { addToCart } = utils;
+
 
   const settings = {
     dots: true,

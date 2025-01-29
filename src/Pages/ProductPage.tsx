@@ -35,8 +35,8 @@ interface Product {
 }
 
 function ProductPage() {
-  const { addToCart } = utils;
-  const { isAdmin, isLoggedIn, loggedUserId, loggedUserCartId } =
+
+  const { isAdmin, isLoggedIn, loggedUserId, loggedUserCartId,addToCart } =
     useContext(AuthContext);
   const [productData, setProductData] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState([]);

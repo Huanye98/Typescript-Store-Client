@@ -14,8 +14,15 @@ import {
   Typography,
   InputAdornment,
   Button,
+  Badge,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Paper,
 } from "@mui/material";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
 function Nav() {
@@ -24,13 +31,24 @@ function Nav() {
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { isLoggedIn, loggedUserId, isAdmin, authenticateUser } =
-    useContext(AuthContext);
+  const {
+    isLoggedIn,
+    loggedUserId,
+    isAdmin,
+    authenticateUser,
+    cartCount,
+    fetchCart,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchSearchbarData();
   }, []);
+  useEffect(() => {
+    if (loggedUserId) {
+      fetchCart(loggedUserId);
+    }
+  }, [loggedUserId]);
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -85,7 +103,7 @@ function Nav() {
           />
         </Link>
         <Box sx={{ display: "flex", gap: 2 }}>
-        <Link to={"/"}>
+          <Link to={"/"}>
             <Typography>Main</Typography>
           </Link>
           <Link to={"/Store"}>
@@ -104,7 +122,11 @@ function Nav() {
               {!isAdmin && (
                 <>
                   <Link to={"/cart"}>
-                    <Typography>Cart</Typography>
+                    <IconButton>
+                      <Badge badgeContent={cartCount} color="primary">
+                        <ShoppingCartIcon sx={{ color: "secondary" }} />
+                      </Badge>
+                    </IconButton>
                   </Link>
                   <Link to={"/profile"}>
                     <Typography>Profile</Typography>
@@ -115,9 +137,8 @@ function Nav() {
           )}
         </Box>
 
-       
-          {/* Searchbar +  Aut */}
-        <Box sx={{ display: "flex", flexDirection:"row" }}>
+        {/* Searchbar +  Aut */}
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
           <Box>
             {/* SearchBr */}
             <TextField
@@ -137,8 +158,10 @@ function Nav() {
             />
             {isLoading && <p>Loading...</p>}
             {error && <p className="error">{error}</p>}
-              {/* REsults */}
-            <Box
+            {/* REsults */}
+
+            <List
+            disablePadding
               sx={{
                 position: "absolute",
                 width: "277px",
@@ -153,53 +176,54 @@ function Nav() {
             >
               {filteredData.slice(0, 10).map((e) => (
                 <Link to={`/store/${e.id}`}>
-                  <Box key={e.id} sx={{ zIndex: 3 }}>
-                    {e.name}
-                  </Box>
+                  <ListItem  key={e.id} sx={{ zIndex: 3 }}>
+                    <ListItemText>{e.name}</ListItemText>
+                  </ListItem>
+                  <Divider />
                 </Link>
               ))}
-            </Box>
-            </Box>
+            </List>
+          </Box>
 
-            {/* Auth */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                margin:"0 15px",
-              }}
-            >
-              {!isLoggedIn && (
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Link to={"/login"}>
-                    <Button
-                      variant="contained"
-                      sx={{ color: "black", width: "100px" }}
-                    >
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to={"/signup"}>
-                    <Button
-                      variant="contained"
-                      sx={{ color: "black", width: "100px" }}
-                    >
-                      Sign Up
-                    </Button>
-                  </Link>
-                </Box>
-              )}
-              {isLoggedIn && (
-                <Button
-                  variant="contained"
-                  color="secondary.main"
-                  onClick={handleLogOut}
-                >
-                  LogOut
-                </Button>
-              )}
-            </Box>
+          {/* Auth */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              margin: "0 15px",
+            }}
+          >
+            {!isLoggedIn && (
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Link to={"/login"}>
+                  <Button
+                    variant="contained"
+                    sx={{ color: "black", width: "100px" }}
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to={"/signup"}>
+                  <Button
+                    variant="contained"
+                    sx={{ color: "black", width: "100px" }}
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </Box>
+            )}
+            {isLoggedIn && (
+              <Button
+                variant="contained"
+                color="secondary.main"
+                onClick={handleLogOut}
+              >
+                LogOut
+              </Button>
+            )}
+          </Box>
         </Box>
       </Toolbar>
     </AppBar>
