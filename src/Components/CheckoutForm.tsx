@@ -1,6 +1,5 @@
-// in "src/components/CheckoutForm.jsx"
-
 import { useEffect, useState } from "react";
+
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -8,13 +7,15 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
+
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState('');
+
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     if (!stripe) {
@@ -33,6 +34,7 @@ function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+  
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -46,6 +48,7 @@ function CheckoutForm() {
       }
     });
   }, [stripe]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

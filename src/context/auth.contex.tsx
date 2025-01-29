@@ -27,7 +27,6 @@ const [loggedUserId, setLoggedUserId] = useState(null);
 const [loggedUserCartId, setLoggedUserCartId] = useState(null);
 const [isAuthenticating, setIsAuthenticating] = useState(true);
 const [isAdmin, setIsAdmin] = useState(false);
-
 const authenticateUser = async ()=>{
     const token = localStorage.getItem("token")
     if(!token){
@@ -54,6 +53,7 @@ const authenticateUser = async ()=>{
         }else{
             setIsAdmin(false)
         }
+       
         console.log("authenticateUser successfull")
     } catch (error) {
         console.log("was not able to authenticate user",error);

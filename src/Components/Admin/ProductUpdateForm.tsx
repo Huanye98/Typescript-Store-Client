@@ -3,11 +3,8 @@ import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
-function ProductUpdateForm({ productId, handleDelete }) {
-  const [imageUrl, setImageUrl] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSnackbar }) {
+  const emptyFormData = {
     name: "",
     price: "",
     imageUrl: "",
@@ -18,12 +15,14 @@ function ProductUpdateForm({ productId, handleDelete }) {
     stock: "",
     is_Featured: "",
     isAvaliable: "",
-  });
-
+  }
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState(emptyFormData);
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sendUpdateData();
-    navigate(`/store`);
   };
 
   const sendUpdateData = async () => {
@@ -39,6 +38,9 @@ function ProductUpdateForm({ productId, handleDelete }) {
         `/products/${productId}`,
         sanitizedData
       );
+      setSuccessMessage("Product updated successfully")
+      setOpenSnackbar(true)
+      setFormData(emptyFormData)
       console.log("Product updated", response);
     } catch (error) {
       console.log("was not able to update products", error);

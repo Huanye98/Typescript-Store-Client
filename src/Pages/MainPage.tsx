@@ -97,7 +97,7 @@ function MainPage() {
         </Box>
 
         <Box className="landingScrollingText"></Box>
-        <Typography> newArrivals</Typography>
+        <Typography> New Arrivals</Typography>
         <Box >
           <Slider {...settings} style={style}>
             {newArrivals.map((product, index) => {
@@ -119,7 +119,7 @@ function MainPage() {
         <Box
           className="LandingfeaturedCollection"
         >
-          featuredCollection
+          Featured Collection
           <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
@@ -146,8 +146,10 @@ function MainPage() {
         </Slider>
 
         <Box className="landingAbout" >
-          Abouot
+          <a href={"/about"}>
+          About us
           <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
+          </a>
         </Box>
         <Typography> Hot!</Typography>
         <Slider {...settings} style={style}>

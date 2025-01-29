@@ -4,7 +4,7 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Chip
+  Chip,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Product } from "../Types/Types";
@@ -27,7 +27,8 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
   loggedUserId,
   loggedUserCartId,
 }) => {
-  const { id, name, imageurl, finalPrice, category } = product;
+  const { id, name, imageurl, finalPrice, category, isavaliable, stock } =
+    product;
   const { addToCart } = utils;
   return (
     <Card
@@ -38,10 +39,10 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
         borderRadius: "5%",
         transformOrigin: "center",
         transition: "background-color 0.5s ease",
-        display:"flex",
-        justifyContent:"space-between",
-        willChange:"transform",
-        flexDirection:"column",
+        display: "flex",
+        justifyContent: "space-between",
+        willChange: "transform",
+        flexDirection: "column",
         "&:hover": {
           transform: "scale(1.05)",
           border: "#f3d4a8 solid 3px",
@@ -58,18 +59,40 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
             alt={name}
           />
         )}
-        {category === "Digital goods" && <Chip
-        label="Digital"
-        color="secondary"
-        sx={{
-          position: 'absolute',
-          top: 16,
-          left: 16,
-          zIndex: 1,
-          fontWeight: 'bold',
-        }}
-      />}
-        <CardContent sx={{height:"120px" , display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+        {(stock == 0 || isavaliable === false) && (
+          <Chip
+            label="Out of Stock"
+            color="secondary"
+            sx={{
+              position: "absolute",
+              top: 16,
+              left: 16,
+              zIndex: 1,
+              fontWeight: "bold",
+            }}
+          />
+        )}
+        {category === "Digital goods" && (
+          <Chip
+            label="Digital"
+            color="secondary"
+            sx={{
+              position: "absolute",
+              top: 16,
+              left: 16,
+              zIndex: 1,
+              fontWeight: "bold",
+            }}
+          />
+        )}
+        <CardContent
+          sx={{
+            height: "120px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography>{name}</Typography>
           <Typography>{parseInt(finalPrice).toFixed(2)}€</Typography>
         </CardContent>

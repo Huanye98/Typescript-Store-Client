@@ -8,7 +8,7 @@ export interface Product {
   category: string;
   stock: number;
   isFeatured: boolean;
-  isAvailable: boolean;
+  isavaliable: boolean;
 }
 
 export interface User {

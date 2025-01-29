@@ -9,7 +9,7 @@ function Admin() {
     price: 0,
     description: "",
     isavaliable: "false",
-    discountvalue: 1,
+    discountvalue: 0,
     imageurl: "",
     category: "",
     collection_id: 1,
@@ -31,17 +31,13 @@ function Admin() {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]:
-        name === "isAvaliable" || name === "is_featured"
-          ? value === "true" // Convert string to boolean
-          : type === "number"
-          ? +value // Convert string to number
+        type === "number" && name !== "price"
+          ? +value // Convert to number, except for "price"
           : value,
     }));
   };
@@ -182,6 +178,7 @@ function Admin() {
 
           {/* Discount Value */}
           <Box sx={{ marginBottom: 2 }}>
+            <Typography sx={{color:"grey"}}> *Discount example: 0.2 = 20% off</Typography>
             <TextField
               label="Discount Value"
               type="number"

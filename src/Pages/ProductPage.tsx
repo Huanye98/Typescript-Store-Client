@@ -17,6 +17,8 @@ import {
   Typography,
   TextField,
   Divider,
+  Alert,
+  Snackbar
 } from "@mui/material";
 
 interface Product {
@@ -38,6 +40,8 @@ function ProductPage() {
     useContext(AuthContext);
   const [productData, setProductData] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const { productId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -93,10 +97,9 @@ function ProductPage() {
   };
   const handleAdd = async (productId, quantity, userId, userCartId) => {
     try {
-      const response = await addToCart(productId, quantity, userId, userCartId);
-      if (response.success) {
-        navigate("/store");
-      }
+       await addToCart(productId, quantity, userId, userCartId);
+      setSuccessMessage("Product added to cart")
+      setOpenSnackbar(true)
     } catch (error) {
       console.log("was not able to add to cart", error);
     }
@@ -115,8 +118,6 @@ function ProductPage() {
       setIsLoading(false);
     }
   };
-
-  
   const fetchRelatedProducts = async (relatedCategory) => {
     try {
       const response = await service.get("/products", {
@@ -128,7 +129,9 @@ function ProductPage() {
       console.log(error);
     }
   };
-
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
   if (isLoading === true || productData === null) {
     return <p>Loading product....</p>;
   }
@@ -155,7 +158,7 @@ function ProductPage() {
           </Box>
 
           {/* Right data */}
-          <Box flex={1} sx={{ maxWidth: "50%", mt: "70px" }}>
+          <Box flex={1} sx={{ maxWidth: "50%", mt: "70px" , display:"flex", flexDirection:"column", gap:2}}>
             {productData.collection_id && (
               <Typography variant="body1">
                 Collection: {productData.collection_name}
@@ -165,7 +168,7 @@ function ProductPage() {
               Price: {productData.finalPrice.toFixed(2)}€
             </Typography>
 
-            {productData.discountvalue != 1 && (
+            {productData.discountvalue != 0 && (
               <>
                 <Typography variant="body1">
                   discount:{productData.discountvalue * 100}%
@@ -173,7 +176,6 @@ function ProductPage() {
                 <Typography variant="body1">
                   Original price: {productData.price}€
                 </Typography>
-                ww
               </>
             )}
 
@@ -186,7 +188,7 @@ function ProductPage() {
               </Typography>
             )}
             {/* Add to cart */}
-            {!isAdmin && isLoggedIn && productData.isavaliable && (
+            {!isAdmin && isLoggedIn && productData.isavaliable && productData.stock != 0 &&  (
               <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 2 }}>
                 <TextField
                   label="Quantity"
@@ -198,10 +200,7 @@ function ProductPage() {
                   variant="outlined"
                   fullWidth
                 />
-              </Box>
-            )}
-            {isLoggedIn && productData.isavaliable && (
-              <Button
+                <Button
                 variant="outlined"
                 onClick={() =>
                   handleAdd(productId, amount, loggedUserId, loggedUserCartId)
@@ -210,6 +209,7 @@ function ProductPage() {
               >
                 Add to cart
               </Button>
+              </Box>
             )}
             {!isLoggedIn && (
               <Button
@@ -250,7 +250,18 @@ function ProductPage() {
               <ProductUpdateForm
                 productId={productId}
                 handleDelete={handleDelete}
+                setSuccessMessage={setSuccessMessage}
+                setOpenSnackbar={setOpenSnackbar}
               />
+              <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert onClose={handleCloseSnackbar} severity={"success"}>
+            {successMessage}
+          </Alert>
+        </Snackbar>
             </>
           )}
         </Box>

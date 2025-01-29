@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/auth.contex";
 import utils from "../../utils";
 import { Link } from "react-router-dom";
 import PaymentIntent from "../../Components/PaymentIntent";
-import { Box, Button, Card, CardContent, CardMedia, Container } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Height } from "@mui/icons-material";
 
@@ -13,7 +13,7 @@ function Cart() {
   const { addToCart } = utils;
   const [userData, setUserData] = useState(null);
   const { loggedUserId, loggedUserCartId } = useContext(AuthContext);
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState([]);
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
   const [stripeData, setStripeData] = useState(null);
 
@@ -89,7 +89,7 @@ function Cart() {
           className="cart-list-container"
           sx={{ display: "flex", flexDirection: "column" }}
         >
-          {cart.map((e) => {
+          {cart.length > 0 ? cart.map((e) => {
             return (
               <Card
                 key={e.product_id}
@@ -106,7 +106,7 @@ function Cart() {
                     <p>{e.product_name}</p>
                   </Link>
 
-                  <p>Final price: {e.final_price * e.quantity}$</p>
+                  <p>Final price: {e.final_price * e.quantity}€</p>
                   {e.quantity != 1 && <p>price per unit: {e.final_price} </p>}
                   {e.discount < 1 && (
                     <>
@@ -152,7 +152,7 @@ function Cart() {
                 </CardContent>
               </Card>
             );
-          })}
+          }):<Typography>Your cart is empty</Typography>}
         </Box>
 
         <Box sx={{ backgroundColor: "white" , width:"600px", height:"400px", padding:"20px", mt:"11px"}}>

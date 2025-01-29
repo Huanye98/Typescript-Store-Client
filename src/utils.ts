@@ -23,7 +23,6 @@ const doPasswordsMatch = (password: string,repeatPassword:string)=>{
   if(password === repeatPassword){
     return true
   }else{
-    alert("Passwords do not match, please try again") 
     return false
   }
   

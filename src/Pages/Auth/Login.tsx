@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
-import { useNavigate } from "react-router-dom";
-import { Container, Box, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Container, Box, Button,Alert } from "@mui/material";
 import Footer from "../../Components/Footer";
 
 interface FormData {
@@ -14,6 +14,8 @@ interface FormData {
 const Login = () => {
   const { authenticateUser, isAdmin, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromSignup = location.state?.fromSignup;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -44,11 +46,18 @@ const Login = () => {
     <>
       <Nav />
       <Container>
+        <Box>
+          {fromSignup && (
+            <Alert severity="success">
+              Registration successful! You can now log in.
+            </Alert>
+          )}
+        </Box>
         <Box
           component={"form"}
           onSubmit={handleSubmit}
           sx={{
-            backgroundColor:"primary.main",
+            backgroundColor: "primary.main",
             display: "flex",
             flexDirection: "column",
             justifySelf: "center",
