@@ -48,14 +48,16 @@ function Admin() {
     postFormData();
   };
 
-  const handleFileUpload = async (event) => {
-    if (!event.target.files[0]) {
+  const handleFileUpload = async (event:React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (!files) {
       return;
     }
+    const file = files[0]
     setIsUploading(true);
     const uploadData = new FormData();
-    uploadData.append("image", event.target.files[0]);
-    console.log(event.target.files[0])
+    uploadData.append("image", file);
+    console.log(file)
     try {
       const response = await service.post(
         "http://localhost:5005/api/upload/",

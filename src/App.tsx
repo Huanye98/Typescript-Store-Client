@@ -8,8 +8,9 @@ import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/SignUp"
 import Cart from "./Pages/User/Cart";
 import Profile from "./Pages/User/Profile"
-import Error400 from "./Pages/Error/400";
+import Error400 from "./Pages/Error/500";
 import PaymentSuccess from "./Components/PaymentSuccess";
+import Error500 from "./Pages/Error/500";
 
 const App: React.FC = () => {
   return (
@@ -25,7 +26,8 @@ const App: React.FC = () => {
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/profile" element={<Profile/>} />
-        <Route path="/error" element={<Error400/>} />
+        <Route path="/*" element={<Error400/>} />
+        <Route path="/error500" element={<Error500/>} />
         <Route path="/payment-success" element={ <PaymentSuccess/> }/>
 
       </Routes>
