@@ -35,9 +35,7 @@ const theme = createTheme({
           "&:visited": {
             color: "secondary.main",
           },
-          textDecoration: {
-            color: "none",
-          },
+          textDecoration:"none"
         },
       },
     },
