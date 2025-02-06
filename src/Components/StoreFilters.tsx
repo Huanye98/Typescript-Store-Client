@@ -1,4 +1,3 @@
-import { useState } from "react";
 import service from "../service/service.config";
 import {
   Box,
@@ -16,7 +15,10 @@ type FilterData = {
 }
 
 type StorefilersProps = {
+  setProducts: React.Dispatch<React.SetStateAction<any[]>>;
   filterData: FilterData;
+  setFilterData: React.Dispatch<React.SetStateAction<any>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const StoreFilters:React.FC<StorefilersProps> =({ setProducts,filterData, setFilterData, setPage })=> {

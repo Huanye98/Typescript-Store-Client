@@ -17,10 +17,11 @@ import {
   TextField,
   Divider,
   Alert,
-  Snackbar
+  Snackbar,
 } from "@mui/material";
 
 interface Product {
+  id: number;
   name: string;
   price: number;
   finalPrice: number;
@@ -34,8 +35,7 @@ interface Product {
 }
 
 function ProductPage() {
-
-  const { isAdmin, isLoggedIn, loggedUserId, loggedUserCartId,addToCart } =
+  const { isAdmin, isLoggedIn, loggedUserId, loggedUserCartId, addToCart } =
     useContext(AuthContext);
   const [productData, setProductData] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -46,6 +46,7 @@ function ProductPage() {
   const [error, setError] = useState<string | null>(null);
   const [amount, setAmount] = useState<number>(1);
   const navigate = useNavigate();
+
 
   const settings = {
     dots: true,
@@ -60,15 +61,10 @@ function ProductPage() {
     border: "1px solid red",
   };
   useEffect(() => {
-    console.log(productId);
-    if (productId) {
-      fetchProductData(productId);
-
-      console.log(productId);
-    }
+    if(!productId) return;
+    fetchProductData(parseInt(productId));
+    
   }, [productId]);
-
-
 
   const deleteProduct = async () => {
     if (!productId) {
@@ -94,16 +90,21 @@ function ProductPage() {
       alert("action canceled");
     }
   };
-  const handleAdd = async (productId, quantity, userId, userCartId) => {
+  const handleAdd = async (
+    productId: number,
+    quantity: number,
+    userId: number,
+    userCartId: number
+  ) => {
     try {
-       await addToCart(productId, quantity, userId, userCartId);
-      setSuccessMessage("Product added to cart")
-      setOpenSnackbar(true)
+      await addToCart(productId, quantity, userId, userCartId);
+      setSuccessMessage("Product added to cart");
+      setOpenSnackbar(true);
     } catch (error) {
       console.log("was not able to add to cart", error);
     }
   };
-  const fetchProductData = async (fetchId: string) => {
+  const fetchProductData = async (fetchId: number) => {
     try {
       const filters = { id: fetchId };
       const response = await service.get("/products/", { params: filters });
@@ -117,7 +118,7 @@ function ProductPage() {
       setIsLoading(false);
     }
   };
-  const fetchRelatedProducts = async (relatedCategory) => {
+  const fetchRelatedProducts = async (relatedCategory: string) => {
     try {
       const response = await service.get("/products", {
         params: { category: relatedCategory, limit: 6 },
@@ -157,7 +158,16 @@ function ProductPage() {
           </Box>
 
           {/* Right data */}
-          <Box flex={1} sx={{ maxWidth: "50%", mt: "70px" , display:"flex", flexDirection:"column", gap:2}}>
+          <Box
+            flex={1}
+            sx={{
+              maxWidth: "50%",
+              mt: "70px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
             {productData.collection_id && (
               <Typography variant="body1">
                 Collection: {productData.collection_name}
@@ -187,29 +197,42 @@ function ProductPage() {
               </Typography>
             )}
             {/* Add to cart */}
-            {!isAdmin && isLoggedIn && productData.isavaliable && productData.stock != 0 &&  (
-              <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 2 }}>
-                <TextField
-                  label="Quantity"
-                  type="number"
-                  value={amount}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setAmount(e.target.value)
-                  }
-                  variant="outlined"
-                  fullWidth
-                />
-                <Button
-                variant="outlined"
-                onClick={() =>
-                  handleAdd(productId, amount, loggedUserId, loggedUserCartId)
-                }
-                sx={{ color: "black", backgroundColor: "salmon" }}
-              >
-                Add to cart
-              </Button>
-              </Box>
-            )}
+            {!isAdmin &&
+              isLoggedIn &&
+              productData.isavaliable &&
+              productData.stock != 0 && (
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap={2}
+                  sx={{ mt: 2 }}
+                >
+                  <TextField
+                    label="Quantity"
+                    type="number"
+                    value={amount}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setAmount(e.target.value)
+                    }
+                    variant="outlined"
+                    fullWidth
+                  />
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      handleAdd(
+                        productId,
+                        amount,
+                        loggedUserId,
+                        loggedUserCartId
+                      )
+                    }
+                    sx={{ color: "black", backgroundColor: "salmon" }}
+                  >
+                    Add to cart
+                  </Button>
+                </Box>
+              )}
             {!isLoggedIn && (
               <Button
                 variant="outlined"
@@ -223,22 +246,20 @@ function ProductPage() {
         </Box>
         <Divider sx={{ margin: "30px 0" }} />
         {/* Related products */}
-        <Box>
+        <Box sx={style}>
           <Typography>Related products</Typography>
-          <Slider {...settings} style={style}>
-            {relatedProducts
-              
-              .map((product) => {
-                return (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    addtoCart={addToCart}
-                    loggedUserCartId={loggedUserCartId}
-                    loggedUserId={loggedUserId}
-                  />
-                );
-              })}
+          <Slider {...settings}>
+            {relatedProducts.map((product:Product) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addtoCart={addToCart}
+                  loggedUserCartId={loggedUserCartId}
+                  loggedUserId={loggedUserId}
+                />
+              );
+            })}
           </Slider>
         </Box>
         {/* Admin update product form */}
@@ -253,14 +274,14 @@ function ProductPage() {
                 setOpenSnackbar={setOpenSnackbar}
               />
               <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert onClose={handleCloseSnackbar} severity={"success"}>
-            {successMessage}
-          </Alert>
-        </Snackbar>
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+              >
+                <Alert onClose={handleCloseSnackbar} severity={"success"}>
+                  {successMessage}
+                </Alert>
+              </Snackbar>
             </>
           )}
         </Box>

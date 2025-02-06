@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import {
   PaymentElement,
-  LinkAuthenticationElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";

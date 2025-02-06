@@ -30,7 +30,9 @@ interface Product {
   discountvalue: number;
   imageurl: string;
 }
-
+type QueryParams = {
+  [key: string]: string | number | boolean;
+};
 function MainPage() {
   const [newArrivals, setNewArrivals] = useState([]);
   const [popularItems, setPopularItems] = useState([]);
@@ -68,7 +70,7 @@ function MainPage() {
     fetchMainPageData(featuredQuery, "featuredItems");
   }, []);
 
-  const fetchMainPageData = async (query, type:string) => {
+  const fetchMainPageData = async (query:QueryParams, type:string) => {
     try {
       const response = await service.get("/products", { params: query });
       if (type === "newArrivals") {
@@ -108,8 +110,8 @@ function MainPage() {
 
         <Box className="landingScrollingText"></Box>
         <Typography> New Arrivals</Typography>
-        <Box >
-          <Slider {...settings} style={style}>
+        <Box style={style}>
+          <Slider {...settings} >
             {newArrivals.map((product:Product, index) => {
               return (
                 <Card key={index} sx={{width:'300px !important'}}>
@@ -133,7 +135,8 @@ function MainPage() {
           <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
-        <Slider {...settings} style={style}>
+        <Box sx={style}>
+        <Slider {...settings} >
           {featuredItems.length > 0 ? (
             featuredItems.map((product:Product, index) => {
               return (
@@ -154,15 +157,16 @@ function MainPage() {
             <Typography> no products</Typography>
           )}
         </Slider>
-
+          </Box>
         <Box className="landingAbout" >
           <a href={"/about"}>
           About us
           <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
           </a>
         </Box>
+        <Box sx={style}>
         <Typography> Hot!</Typography>
-        <Slider {...settings} style={style}>
+        <Slider {...settings} >
           {popularItems.map((product:Product, index) => {
             return (
               <Card key={index} sx={{width:'300px !important'}} >
@@ -179,6 +183,7 @@ function MainPage() {
             );
           })}
         </Slider>
+        </Box>
       </Container>
       <Footer />
     </>

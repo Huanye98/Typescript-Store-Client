@@ -7,13 +7,8 @@ import CheckoutForm from "./CheckoutForm";
 import axios from "axios";
 
 interface ProductDetails {
-  id:number;
-  payment_id:string;
-  user_id:number;
   currency:string;
   amount:number;
-  status:string;
-  
 }
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Make sure you add your publishable API key to the .env.local
 // !IMPORTANT. If using VITE, make sure you use the correct variable naming and usage (import.meta.env.VITE_VARIABLE_NAME)
