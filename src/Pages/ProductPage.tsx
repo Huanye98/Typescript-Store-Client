@@ -20,7 +20,7 @@ import {
   Snackbar,
 } from "@mui/material";
 
-interface Product {
+interface ProductPageProps {
   id: number;
   name: string;
   price: number;
@@ -32,12 +32,14 @@ interface Product {
   stock: number;
   discountvalue: number;
   imageurl: string;
+  category: string;
+  isFeatured: boolean;
 }
 
 function ProductPage() {
   const { isAdmin, isLoggedIn, loggedUserId, loggedUserCartId, addToCart } =
     useContext(AuthContext);
-  const [productData, setProductData] = useState<Product | null>(null);
+  const [productData, setProductData] = useState<ProductPageProps | null>(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -248,14 +250,11 @@ function ProductPage() {
         <Box sx={style}>
           <Typography>Related products</Typography>
           <Slider {...settings}>
-            {relatedProducts.map((product:Product) => {
+            {relatedProducts.map((product:ProductPageProps) => {
               return (
                 <ProductCard
                   key={product.id}
                   product={product}
-                  addtoCart={addToCart}
-                  loggedUserCartId={loggedUserCartId}
-                  loggedUserId={loggedUserId}
                 />
               );
             })}
