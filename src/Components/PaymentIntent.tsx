@@ -24,7 +24,7 @@ function PaymentIntent({ productDetails}:{productDetails:ProductDetails}) {
   const handleUseEffect = async () => {
     //                                                        this is the product that the user is trying to purchase, sent to the backend
     //                                                                                                  |
-     const response = await axios.post("http://localhost:5005/api/payment/create-payment-intent", productDetails)
+     const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/payment/create-payment-intent`, productDetails)
     // !IMPORTANT: Adapt the request structure to the one in your project (services, .env, auth, etc...)
 
     setClientSecret(response.data.clientSecret)

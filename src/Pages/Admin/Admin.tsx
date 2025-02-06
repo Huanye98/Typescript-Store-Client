@@ -61,7 +61,7 @@ function Admin() {
     console.log(file)
     try {
       const response = await service.post(
-        "http://localhost:5005/api/upload/",
+        `${import.meta.env.VITE_SERVER_URL}/api/upload/`,
         uploadData
       );
       setImageUrl(response.data.imageUrl);

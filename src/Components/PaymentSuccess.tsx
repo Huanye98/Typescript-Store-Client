@@ -35,7 +35,7 @@ const PaymentSuccess = () => {
 
     try {
       await axios.patch(
-        "http://localhost:5005/api/payment/update-payment-intent",
+        `${import.meta.env.VITE_SERVER_URL}/api/payment/update-payment-intent`,
         paymentIntentInfo
       );
       // !IMPORTANT: Adapt the request structure to the one in your project (services, .env, auth, etc...)
