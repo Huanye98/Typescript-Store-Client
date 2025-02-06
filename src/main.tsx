@@ -2,10 +2,10 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider, Typography, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme,ThemeOptions } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthWrapper } from "./context/auth.contex.tsx";
-const theme = createTheme({
+const theme:ThemeOptions = createTheme({
   palette: {
     primary: {
       main: "#f9f9f9",
@@ -37,14 +37,6 @@ const theme = createTheme({
           },
           textDecoration:"none"
         },
-      },
-    },
-  },
-  MuiInputLabel: {
-    styleOverrides: {
-      root: {
-        fontFamily: "'Arial', sans-serif",
-        fontSize: "0.5rem",
       },
     },
   },

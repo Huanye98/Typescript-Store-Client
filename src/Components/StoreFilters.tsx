@@ -7,17 +7,27 @@ import {
   Select,
   Button,
   MenuItem,
+  SelectChangeEvent
 } from "@mui/material";
+type FilterData = {
+  sort: "price:asc" | "price:desc" | "name:asc" | "name:desc" | "popular:asc" | "popular:desc" | "created_at:asc" | "created_at:desc";
+  category: string;
+  isavaliable: string;
+}
 
-function StoreFilters({ setProducts,filterData, setFilterData, setPage }) {
+type StorefilersProps = {
+  filterData: FilterData;
+}
+
+const StoreFilters:React.FC<StorefilersProps> =({ setProducts,filterData, setFilterData, setPage })=> {
   
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >
   ) => {
     const { name, value, type } = e.target;
 
-    setFilterData((prevData) => ({
+    setFilterData((prevData:FilterData) => ({
       ...prevData,
       [name]:
         type === "checkbox"
@@ -122,7 +132,7 @@ function StoreFilters({ setProducts,filterData, setFilterData, setPage }) {
               name="category"
               id="category"
               value={filterData.category}
-              onChange={handleInputChange}
+              onChange={(e: SelectChangeEvent<string>) => handleInputChange(e)}
               label="Category"
               sx={selectStyles}
             >

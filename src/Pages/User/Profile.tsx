@@ -11,13 +11,16 @@ interface form {
   address: string;
   email: string;
 }
-
+interface UserData {
+  user_email: string;
+  address: string;
+}
 function Profile() {
   const { loggedUserId } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData|null>(null);
   const [formData, setFormData] = useState<form>({
     email: "",
     password: "",
@@ -59,7 +62,7 @@ function Profile() {
 
     return true;
   };
-  const changeData = async (field: string) => {
+  const changeData = async (field: keyof form) => {
     if (field === "password" && !validatePassword()) {
       return;
     }
@@ -141,7 +144,7 @@ function Profile() {
 
         <Box>
           <label htmlFor="address">Address:</label>
-          {userData.address && <p>{userData.user_address}</p>}
+          {userData.address && <p>{userData.address}</p>}
           <TextField
             type="text"
             value={formData.address}

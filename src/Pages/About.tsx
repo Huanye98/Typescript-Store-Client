@@ -77,10 +77,10 @@ function About() {
               height="315"
               src="https://www.youtube.com/embed/qh7BCluk3wc?si=TKGqy5qfN8b1P2WL"
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             ></iframe>
           </Box>
           <Typography variant="h3">Artists</Typography>

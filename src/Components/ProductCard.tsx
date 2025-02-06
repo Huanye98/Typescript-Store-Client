@@ -10,27 +10,17 @@ import { Link } from "react-router-dom";
 import { Product } from "../Types/Types";
 import { AuthContext } from "../context/auth.contex";
 import { useContext } from "react";
+
 interface ProductCardComponentProps {
   product: Product;
-  addToCart: (
-    productId: string,
-    quantity: number,
-    userId: string,
-    cartId: string
-  ) => void;
-  loggedUserId: string;
-  loggedUserCartId: string;
 }
 
-const ProductCard: React.FC<ProductCardComponentProps> = ({
-  product,
-  loggedUserId,
-  loggedUserCartId,
-}) => {
+const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
   const { id, name, imageurl, finalPrice, category, isavaliable, stock } =
     product;
- 
-  const {fetchCart,addToCart} = useContext(AuthContext)
+
+  const { fetchCart, addToCart, loggedUserId, loggedUserCartId } =
+    useContext(AuthContext);
   return (
     <Card
       className="productCard"
@@ -95,7 +85,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
           }}
         >
           <Typography>{name}</Typography>
-          <Typography>{parseInt(finalPrice).toFixed(2)}€</Typography>
+          <Typography>{finalPrice.toFixed(2)}€</Typography>
         </CardContent>
       </Link>
       <Button
@@ -105,7 +95,12 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({
           "&:hover": { backgroundColor: "secondary.main" },
         }}
         onClick={() => {
-          addToCart(id, 1, loggedUserId, loggedUserCartId),fetchCart();
+          if (loggedUserId !== null && loggedUserCartId !== null) {
+            addToCart(Number(id), 1, loggedUserId, loggedUserCartId);
+            fetchCart(loggedUserId);
+          } else {
+            console.error("loggedUserId or loggedUserCartId is null");
+          }
         }}
       >
         Add to cart

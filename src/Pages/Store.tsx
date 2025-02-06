@@ -1,16 +1,14 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, } from "react";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import service from "../service/service.config";
 import StoreFilters from "../Components/StoreFilters";
-import { AuthContext } from "../context/auth.contex";
 import { Box, Button, Container, Grid2 } from "@mui/material";
 import ProductCard from "../Components/ProductCard";
 import { Product } from "../Types/Types";
 
 
 function Store() {
-  const { loggedUserId, loggedUserCartId, addToCart } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -72,9 +70,9 @@ function Store() {
         <Box>
           <StoreFilters
             setProducts={setProducts}
-            filterData={filterData}
             setFilterData={setFilterData}
             setPage={setPage}
+            filterData={filterData}
           />
 
           {/* Cards and container */}
@@ -84,9 +82,6 @@ function Store() {
                 <Grid2 key={index} sx={{}}>
                   <ProductCard
                     product={product}
-                    addtoCart={addToCart}
-                    loggedUserCartId={loggedUserCartId}
-                    loggedUserId={loggedUserId}
                   />
                 </Grid2>
               );

@@ -1,8 +1,7 @@
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState,} from "react";
 import service from "../service/service.config";
-import ProductCard from "../Components/ProductCard";
 import {
   Box,
   Card,
@@ -15,12 +14,24 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { AuthContext } from "../context/auth.contex";
 import { Link } from "react-router-dom";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  finalPrice: number;
+  collection_id: number;
+  collection_name: string;
+  description: string;
+  isavaliable: boolean;
+  stock: number;
+  discountvalue: number;
+  imageurl: string;
+}
+
 function MainPage() {
-  const { loggedUserId, loggedUserCartId } = useContext(AuthContext);
   const [newArrivals, setNewArrivals] = useState([]);
   const [popularItems, setPopularItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
@@ -57,7 +68,7 @@ function MainPage() {
     fetchMainPageData(featuredQuery, "featuredItems");
   }, []);
 
-  const fetchMainPageData = async (query, type) => {
+  const fetchMainPageData = async (query, type:string) => {
     try {
       const response = await service.get("/products", { params: query });
       if (type === "newArrivals") {
@@ -99,7 +110,7 @@ function MainPage() {
         <Typography> New Arrivals</Typography>
         <Box >
           <Slider {...settings} style={style}>
-            {newArrivals.map((product, index) => {
+            {newArrivals.map((product:Product, index) => {
               return (
                 <Card key={index} sx={{width:'300px !important'}}>
                   <Link to={`/store/${product.id}`}>
@@ -124,7 +135,7 @@ function MainPage() {
         <Typography>Featured </Typography>
         <Slider {...settings} style={style}>
           {featuredItems.length > 0 ? (
-            featuredItems.map((product, index) => {
+            featuredItems.map((product:Product, index) => {
               return (
                 <Card key={index} sx={{width:'300px !important'}}>
                   <Link to={`/store/${product.id}`}>
@@ -152,7 +163,7 @@ function MainPage() {
         </Box>
         <Typography> Hot!</Typography>
         <Slider {...settings} style={style}>
-          {popularItems.map((product, index) => {
+          {popularItems.map((product:Product, index) => {
             return (
               <Card key={index} sx={{width:'300px !important'}} >
                 <Link to={`/store/${product.id}`}>

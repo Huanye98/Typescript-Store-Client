@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeElementsOptions, Appearance } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
 
 import axios from "axios";
 
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
+interface ProductDetails {
+  id:number;
+  payment_id:string;
+  user_id:number;
+  currency:string;
+  amount:number;
+  status:string;
+  
+}
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Make sure you add your publishable API key to the .env.local
 // !IMPORTANT. If using VITE, make sure you use the correct variable naming and usage (import.meta.env.VITE_VARIABLE_NAME)
 
-function PaymentIntent({ productDetails }) {
+function PaymentIntent({ productDetails}:{productDetails:ProductDetails}) {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -29,10 +35,10 @@ function PaymentIntent({ productDetails }) {
     setClientSecret(response.data.clientSecret)
   }
 
-  const appearance = {
+  const appearance: Appearance = {
     theme: 'stripe',
   };
-  const options = {
+  const options:StripeElementsOptions = {
     clientSecret,
     appearance,
   };

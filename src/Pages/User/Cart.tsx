@@ -6,14 +6,35 @@ import { Link } from "react-router-dom";
 import PaymentIntent from "../../Components/PaymentIntent";
 import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-
+interface Item {
+  product_id: number;
+  product_name: string;
+  product_price: number;
+  final_price: number;
+  discount: number;
+  quantity: number;
+  imageurl: string;
+}
+interface UserData {
+  cartPrice: number;
+  user_address: string;
+  user_name: string;
+  cart_items: Item[];
+}
+interface StripeData {
+  amount: number;
+  products: Item[];
+  userId: number;
+  currency: string;
+  
+}
 function Cart() {
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData|null>(null);
   const { loggedUserId, loggedUserCartId,addToCart,fetchCart } = useContext(AuthContext);
   const [cart, setCart] = useState([]);
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
-  const [stripeData, setStripeData] = useState(null);
+  const [stripeData, setStripeData] = useState<StripeData|null>(null);
 
   useEffect(() => {
     fetchUserData();
@@ -29,7 +50,7 @@ function Cart() {
 
       //stripè data set up
       const totalAmount =
-        fetchedCart.reduce((acc, item) => {
+        fetchedCart.reduce((acc:number, item:Item) => {
           return acc + item.final_price * item.quantity;
         }, 0) * 100;
       setStripeData({
@@ -42,7 +63,7 @@ function Cart() {
       console.error("was not able to get user data", error);
     }
   };
-  const handleAdd = async (id, quantity, userId, productId) => {
+  const handleAdd = async (id:number, quantity:number, userId:number, productId:number) => {
     try {
       const result = await addToCart(id, quantity, userId, productId);
       if (result.success) {
@@ -52,7 +73,7 @@ function Cart() {
       console.log("was not able to cart");
     }
   };
-  const deleteFromCart = async (productId, productQuantity) => {
+  const deleteFromCart = async (productId:number, productQuantity:number) => {
     const body = {
       product_id: productId,
       quantity: productQuantity,
@@ -61,7 +82,9 @@ function Cart() {
     try {
       await service.delete("/users/cart/", { data: body });
       fetchUserData();
-      fetchCart(loggedUserId)
+      if(loggedUserId){
+        fetchCart(loggedUserId)
+      }
     } catch (error) {
       console.error("Failed to delete item from cart:", error);
     }
@@ -88,7 +111,7 @@ function Cart() {
           className="cart-list-container"
           sx={{ display: "flex", flexDirection: "column" }}
         >
-          {cart.length > 0 ? cart.map((e) => {
+          {cart.length > 0 ? cart.map((e:Item) => {
             return (
               <Card
                 key={e.product_id}
@@ -125,14 +148,18 @@ function Cart() {
                     <Button
                       variant="contained"
                       sx={{ backgroundColor: "grey", color: "black" }}
-                      onClick={() =>
+                      onClick={() =>{
+                        if(loggedUserId !== null && loggedUserCartId !== null){
                         handleAdd(
                           e.product_id,
                           1,
                           loggedUserId,
                           loggedUserCartId
                         )
+                      }else{
+                        console.error("no user id or cart id")
                       }
+                      }}
                     >
                       +
                     </Button>
@@ -161,7 +188,7 @@ function Cart() {
           <p>Name: {userData.user_name}</p>
           
           <Box>
-            {showPaymentIntent ? (
+            {showPaymentIntent && stripeData ?   (
               <PaymentIntent productDetails={stripeData} />
             ) : (
               <Button variant="contained" sx={{border:"solid 3px orange"}} onClick={() => setShowPaymentIntent(true)}>

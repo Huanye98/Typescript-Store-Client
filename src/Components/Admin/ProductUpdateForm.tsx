@@ -3,7 +3,14 @@ import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
-function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSnackbar }) {
+interface ProductUpdateFormProps {
+  productId: number; 
+  handleDelete: () => void;
+  setSuccessMessage: (message: string) => void;
+  setOpenSnackbar: (open: boolean) => void;
+}
+
+function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSnackbar }:ProductUpdateFormProps) {
   const emptyFormData = {
     name: "",
     price: "",

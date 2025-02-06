@@ -13,7 +13,9 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     handleUseEffect();
-    fetchCart(loggedUserId)
+    if(loggedUserId){
+      fetchCart(loggedUserId)
+    }
   }, []);
 
   const handleUseEffect = async () => {

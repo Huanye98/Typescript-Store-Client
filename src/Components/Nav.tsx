@@ -24,10 +24,15 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
+interface Item {
+  id: number;  
+  name: string;
+}
+
 function Nav() {
-  const [searchbarData, setSearchbarData] = useState([]);
+  const [searchbarData, setSearchbarData] = useState<Item[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const {
@@ -216,7 +221,7 @@ function Nav() {
             {isLoggedIn && (
               <Button
                 variant="contained"
-                color="secondary.main"
+                color="secondary"
                 onClick={handleLogOut}
               >
                 LogOut
