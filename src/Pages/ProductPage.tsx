@@ -41,13 +41,12 @@ function ProductPage() {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const { productId } = useParams();
+  let { productId } = useParams();
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [amount, setAmount] = useState<number>(1);
   const navigate = useNavigate();
-
-
   const settings = {
     dots: true,
     infinite: true,
@@ -212,7 +211,7 @@ function ProductPage() {
                     type="number"
                     value={amount}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setAmount(e.target.value)
+                      setAmount(Number(e.target.value))
                     }
                     variant="outlined"
                     fullWidth
@@ -221,10 +220,10 @@ function ProductPage() {
                     variant="outlined"
                     onClick={() =>
                       handleAdd(
-                        productId,
+                        Number(productId),
                         amount,
-                        loggedUserId,
-                        loggedUserCartId
+                        Number(loggedUserId),
+                        Number(loggedUserCartId)
                       )
                     }
                     sx={{ color: "black", backgroundColor: "salmon" }}
@@ -268,7 +267,7 @@ function ProductPage() {
             <>
               <Divider sx={{ margin: "30px 0" }} />
               <ProductUpdateForm
-                productId={productId}
+                productId={Number(productId)}
                 handleDelete={handleDelete}
                 setSuccessMessage={setSuccessMessage}
                 setOpenSnackbar={setOpenSnackbar}

@@ -1,14 +1,14 @@
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   imageurl: string;
   finalPrice: number;
   description: string;
-  discountValue: number;
-  category: string;
+  discountvalue: number;
   stock: number;
-  isFeatured: boolean;
   isavaliable: boolean;
+  isFeatured: boolean;
+  category: string;
 }
 
 export interface User {

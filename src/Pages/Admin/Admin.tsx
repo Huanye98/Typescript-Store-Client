@@ -3,6 +3,7 @@ import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Select, MenuItem, Button, FormControl, InputLabel, CircularProgress,Typography, Container } from '@mui/material';
+
 function Admin() {
   const defaultFormData = {
     name: "",
@@ -16,10 +17,10 @@ function Admin() {
     is_featured: "false",
     stock: 0,
   };
-  const navigate = useNavigate();
   const [formData, setFormData] = useState(defaultFormData);
   const [imageUrl, setImageUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate();
 
   const postFormData = async () => {
     try {
@@ -31,13 +32,13 @@ function Admin() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]:
         type === "number" && name !== "price"
-          ? +value // Convert to number, except for "price"
+          ? +value 
           : value,
     }));
   };
@@ -130,7 +131,7 @@ function Admin() {
                 id="isavaliable"
                 name="isavaliable"
                 value={formData.isavaliable}
-                onChange={handleInputChange}
+                onChange={()=>handleInputChange}
                 label="Availability"
               >
                 <MenuItem value="true">Available</MenuItem>
@@ -148,7 +149,7 @@ function Admin() {
                 id="is_featured"
                 name="is_featured"
                 value={formData.is_featured}
-                onChange={handleInputChange}
+                onChange={()=>handleInputChange}
                 label="Featured"
               >
                 <MenuItem value="true">Featured</MenuItem>
@@ -166,7 +167,7 @@ function Admin() {
                 id="category"
                 name="category"
                 value={formData.category}
-                onChange={handleInputChange}
+                onChange={()=>handleInputChange}
                 label="Category"
               >
                 <MenuItem value="">Select</MenuItem>
