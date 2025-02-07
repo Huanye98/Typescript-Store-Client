@@ -59,7 +59,6 @@ function ProductPage() {
   const style = {
     maxWidth: "100vw",
     margin: "10px auto",
-    border: "1px solid red",
   };
   useEffect(() => {
     if(!productId) return;

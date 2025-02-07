@@ -26,10 +26,9 @@ const App: React.FC = () => {
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/profile" element={<Profile/>} />
-        <Route path="/*" element={<Error400/>} />
-        <Route path="/error500" element={<Error500/>} />
         <Route path="/payment-success" element={ <PaymentSuccess/> }/>
-
+        <Route path="/error500" element={<Error500/>} />
+        <Route path="/*" element={<Error400/>} />
       </Routes>
     </>
   );
