@@ -132,7 +132,7 @@ function MainPage() {
           className="LandingfeaturedCollection"
         >
           Featured Collection
-          <img src="/web banner2" alt="" style={{ width: "100%" }} />
+          <img src="/web banner2.webp" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
         <Box sx={style}>
