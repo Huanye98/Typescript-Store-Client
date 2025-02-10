@@ -47,7 +47,7 @@ function About() {
             Canvas & Chaos
           </Typography>
         </Box>
-        <img src={"AAAA.jpg"} style={{ width: "100vw", left: 0 }} />
+        <img src={"aboutImage.jpg"} style={{ width: "100vw", left: 0 }} />
         <Container>
           <Typography sx={{ mb: 3 }}>
             Welcome to Canvas & Chaos – Where Art Meets Expression Step into a

@@ -102,7 +102,7 @@ function Nav() {
         {/* main pages*/}
         <Link to={"/"}>
           <img
-            src="public/Recurso-1.webp"
+            src="/Recurso-1.webp"
             style={{ width: "60px", margin: "0 20px" }}
           />
         </Link>

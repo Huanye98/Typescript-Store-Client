@@ -105,7 +105,7 @@ function MainPage() {
       <Nav />
       <Container>
         <Box className="landingImage">
-          <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
+          <img src="/web banner.webp" alt="" style={{ width: "100%" }} />
         </Box>
 
         <Box className="landingScrollingText"></Box>
@@ -132,7 +132,7 @@ function MainPage() {
           className="LandingfeaturedCollection"
         >
           Featured Collection
-          <img src="/Sin título-1.webp" alt="" style={{ width: "100%" }} />
+          <img src="/web banner2" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
         <Box sx={style}>
@@ -161,7 +161,7 @@ function MainPage() {
         <Box className="landingAbout" >
           <a href={"/about"}>
           About us
-          <img src="/Sin título-1.webp" alt="" style={{ width: "100vw" }} />
+          <img src="/web banner3.webp" alt="" style={{ width: "100vw" }} />
           </a>
         </Box>
         <Box sx={style}>
