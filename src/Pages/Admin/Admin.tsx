@@ -3,7 +3,6 @@ import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Select, MenuItem, Button, FormControl, InputLabel, CircularProgress,Typography, Container } from '@mui/material';
-import sharp from "sharp";
 
 function Admin() {
   const defaultFormData = {
