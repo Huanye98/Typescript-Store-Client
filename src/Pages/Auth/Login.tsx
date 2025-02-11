@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <>
       <Nav />
-      <Container>
+      <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center" , justifyContent: "center", mt: 25}}>
         <Box>
           {fromSignup && (
             <Alert severity="success">
@@ -57,6 +57,7 @@ const Login = () => {
           component={"form"}
           onSubmit={handleSubmit}
           sx={{
+            width:"350px",
             backgroundColor: "primary.main",
             display: "flex",
             flexDirection: "column",
@@ -99,7 +100,6 @@ const Login = () => {
           </Button>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

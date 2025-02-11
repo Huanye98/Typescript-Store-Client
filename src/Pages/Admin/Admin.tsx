@@ -3,6 +3,7 @@ import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Select, MenuItem, Button, FormControl, InputLabel, CircularProgress,Typography, Container } from '@mui/material';
+import sharp from "sharp";
 
 function Admin() {
   const defaultFormData = {
@@ -69,9 +70,11 @@ function Admin() {
         ...prev,
         imageurl: response.data.imageUrl,
       }));
-      setIsUploading(false);
     } catch (error) {
+      console.error("Error during file upload:", error);
       navigate("/error");
+    }finally{
+      setIsUploading(false);
     }
   };
 

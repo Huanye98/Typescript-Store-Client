@@ -64,7 +64,7 @@ function Store() {
           "& img": { width: "100%", maxWidth: "1920", left: "0", zIndex: 2 },
         }}
       >
-        <img src="/storeBanner.webp" alt="wide banner with pastel colors" />
+        <img rel="preload" src="/storeBanner.webp" alt="wide banner with pastel colors" />
       </Box>
       <Container sx={{ postiion: "relative" }}>
         <Box>

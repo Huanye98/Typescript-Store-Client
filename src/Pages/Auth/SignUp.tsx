@@ -87,7 +87,7 @@ const SignUp = () => {
   return (
     <>
       <Nav />
-      <Container>
+      <Container >
         <form onSubmit={handleSubmit}>
           <Box
             display="flex"
@@ -95,7 +95,7 @@ const SignUp = () => {
             gap={2}
             sx={{
               mt: "30px",
-              width: "30%",
+              width: "50%",
               justifySelf: "center",
               margin: "200px 0",
             }}

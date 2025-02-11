@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import service from "../service/service.config";
 import { AuthContext } from "../context/auth.contex";
 import { useNavigate } from "react-router-dom";
-
+import { useMediaQuery } from "react-responsive";
 import debounce from "lodash/debounce";
-
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Box,
@@ -20,12 +20,14 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
 interface Item {
-  id: number;  
+  id: number;
   name: string;
 }
 
@@ -43,7 +45,18 @@ function Nav() {
     cartCount,
     fetchCart,
   } = useContext(AuthContext);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    if (!isDrawerOpen) {
+      setIsDrawerOpen(true);
+    } else if (isDrawerOpen) {
+      setIsDrawerOpen(false);
+    }
+  };
+
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 700px)" });
 
   useEffect(() => {
     fetchSearchbarData();
@@ -90,7 +103,29 @@ function Nav() {
   };
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{ width: "100%" }}>
+      {/* alerts */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          position: "absolute",
+          top: 50,
+        }}
+      >
+        {isLoading && (
+          <Alert severity="info" sx={{zIndex:9999}}>
+            <Typography>Loading...</Typography>
+          </Alert>
+        )}
+        {error && (
+          <Alert severity="error" sx={{zIndex:9999}}>
+            <Typography>error</Typography>
+          </Alert>
+        )}
+      </Box>
+
+      {/* toolbar*/}
       <Toolbar
         sx={{
           display: "flex",
@@ -99,14 +134,15 @@ function Nav() {
           alignItems: "center",
         }}
       >
-        {/* main pages*/}
-        <Link to={"/"}>
-          <img
-            src="/Recurso-1.webp"
-            style={{ width: "60px", margin: "0 20px" }}
-          />
-        </Link>
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box>
+          <Link to={"/"}>
+            <img
+              src="/Recurso-1.webp"
+              style={{ width: "100%", margin: "0 20px", maxWidth: "40px" }}
+            />
+          </Link>
+        </Box>
+        <Box sx={{ display: "flex", gap: 2 ,mr:1}}>
           <Link to={"/"}>
             <Typography>Main</Typography>
           </Link>
@@ -142,93 +178,147 @@ function Nav() {
         </Box>
 
         {/* Searchbar +  Aut */}
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <Box>
+        {isSmallScreen ? (
+          <>
+          <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
+            <MenuIcon />
+          </IconButton>
+            {isDrawerOpen && (
+              <List
+                sx={{
+                  position: "absolute",
+                  top: {xs:"54px", sm:"64px"},
+                  left:0,
+                  width:"100vw",
+                  backgroundColor: "white",
+                  boxShadow: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                {!isLoggedIn && (
+                  <>
+                    <Link to={"/login"}>
+                      <ListItem>
+                        <ListItemText>Login</ListItemText>
+                      </ListItem>
+                    </Link>
+                    <Divider sx={{width:"100%"}} />
+                    <Link to={"/signup"}>
+                      <ListItem>
+                        <ListItemText>signup</ListItemText>
+                      </ListItem>
+                    </Link>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleLogOut}
+                  >
+                    LogOut
+                  </Button>
+                )}
+              </List>
+            )}
+          </>
+        ) : (
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
             {/* SearchBr */}
-            <TextField
-              variant="outlined"
-              type="text"
-              value={searchQuery}
-              onChange={handleInputChange}
-              placeholder="Search for products..."
-              sx={{ height: "60px", borderRadius: 50 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {isLoading && <p>Loading...</p>}
-            {error && <p className="error">{error}</p>}
-            {/* REsults */}
+            <Box >
+              <TextField
+                variant="outlined"
+                type="text"
+                value={searchQuery}
+                onChange={handleInputChange}
+                placeholder="Search for products..."
+                sx={{ height: "60px", borderRadius: 50 }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
+              {/* REsults */}
+
+              <List
+                disablePadding
+                sx={{
+                  position: "absolute",
+                  width: "277px",
+                  top: "100%",
+                  right: 63,
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  zIndex: 9999,
+                  backgroundColor: "white",
+                  boxShadow: 2,
+                }}
+              >
+                {filteredData.slice(0, 10).map((e) => (
+                  <Link to={`/store/${e.id}`}>
+                    <ListItem key={e.id} sx={{ zIndex: 3 }}>
+                      <ListItemText>{e.name}</ListItemText>
+                    </ListItem>
+                    <Divider />
+                  </Link>
+                ))}
+              </List>
+            </Box>
+
+            {/* Auth */}
             <List
-            disablePadding
               sx={{
-                position: "absolute",
-                width: "277px",
-                top: "100%",
-                right: 63,
-                maxHeight: 200,
-                overflowY: "auto",
-                zIndex: 9999,
-                backgroundColor: "white",
-                boxShadow: 2,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                margin: "0 15px",
               }}
             >
-              {filteredData.slice(0, 10).map((e) => (
-                <Link to={`/store/${e.id}`}>
-                  <ListItem  key={e.id} sx={{ zIndex: 3 }}>
-                    <ListItemText>{e.name}</ListItemText>
-                  </ListItem>
-                  <Divider />
-                </Link>
-              ))}
+              {!isLoggedIn && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    margin: "0 15px",
+                    gap: 2,
+                    flexDirection: "row",
+                  }}
+                >
+                  <Link to={"/login"} >
+                    <Button
+                      variant="contained"
+                      sx={{ color: "black", width: "100px", padding: "5px" }}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to={"/signup"}>
+                    <Button
+                      variant="contained"
+                      sx={{ color: "black", width: "100px", padding: "5px" }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
+                </Box>
+              )}
+              {isLoggedIn && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleLogOut}
+                >
+                  LogOut
+                </Button>
+              )}
             </List>
           </Box>
-
-          {/* Auth */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              margin: "0 15px",
-            }}
-          >
-            {!isLoggedIn && (
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Link to={"/login"}>
-                  <Button
-                    variant="contained"
-                    sx={{ color: "black", width: "100px" }}
-                  >
-                    Login
-                  </Button>
-                </Link>
-                <Link to={"/signup"}>
-                  <Button
-                    variant="contained"
-                    sx={{ color: "black", width: "100px" }}
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </Box>
-            )}
-            {isLoggedIn && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleLogOut}
-              >
-                LogOut
-              </Button>
-            )}
-          </Box>
-        </Box>
+        )}
       </Toolbar>
     </AppBar>
   );
