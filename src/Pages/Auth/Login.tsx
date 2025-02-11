@@ -4,7 +4,6 @@ import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Box, Button,Alert } from "@mui/material";
-import Footer from "../../Components/Footer";
 
 interface FormData {
   email: string;
