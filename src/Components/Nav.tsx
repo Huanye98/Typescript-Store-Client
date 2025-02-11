@@ -20,7 +20,6 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Snackbar,
   Alert,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
