@@ -3,7 +3,7 @@ import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import service from "../service/service.config";
 import StoreFilters from "../Components/StoreFilters";
-import { Box, Button, Container, Grid2 } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import ProductCard from "../Components/ProductCard";
 import { Product } from "../Types/Types";
 
