@@ -21,6 +21,7 @@ import {
   ListItemText,
   Divider,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
@@ -115,6 +116,7 @@ function Nav() {
         {isLoading && (
           <Alert severity="info" sx={{zIndex:9999}}>
             <Typography>Loading...</Typography>
+            <CircularProgress color="secondary" />
           </Alert>
         )}
         {error && (

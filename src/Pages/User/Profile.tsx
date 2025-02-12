@@ -2,7 +2,7 @@ import Nav from "../../Components/Nav";
 import { AuthContext } from "../../context/auth.contex";
 import { useContext, useEffect, useState } from "react";
 import service from "../../service/service.config";
-import { Box, TextField, Button, Alert, Snackbar } from "@mui/material";
+import { Box, TextField, Button, Alert, Snackbar, CircularProgress } from "@mui/material";
 
 
 interface form {
@@ -96,7 +96,11 @@ function Profile() {
     setOpenSnackbar(false);
   };
   if (!userData) {
-    return <p>Loading user data...</p>;
+    return (
+        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+        <h2>Loading</h2>
+        <CircularProgress color="secondary" />
+        </Box>)
   }
 
   return (

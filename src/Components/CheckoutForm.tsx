@@ -6,6 +6,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
+import { CircularProgress } from "@mui/material";
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -84,7 +85,7 @@ function CheckoutForm() {
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <div className="spinner" id="spinner"><CircularProgress color="secondary"/></div> : "Pay now"}
         </span>
       </button>
       {message && <div id="payment-message">{message}</div>}

@@ -4,7 +4,7 @@ import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
 import { Link } from "react-router-dom";
 import PaymentIntent from "../../Components/PaymentIntent";
-import { Box, Button, Card, CardContent, CardMedia, Divider, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Divider, Typography } from "@mui/material";
 
 interface Item {
   product_id: number;
@@ -91,10 +91,18 @@ function Cart() {
   };
 
   if (!userData) {
-    return <p>Loading user data...</p>;
+    return (
+      <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+      <h2>Loading user data</h2>
+      <CircularProgress color="secondary" />
+      </Box>)
   }
   if (!cart) {
-    return <p>Loading cart...</p>;
+    return (
+        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+        <h2>Loading cart</h2>
+        <CircularProgress color="secondary" />
+        </Box>)
   }
 
   return (

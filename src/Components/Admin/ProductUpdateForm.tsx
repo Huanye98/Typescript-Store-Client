@@ -1,7 +1,7 @@
 import { useState } from "react";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, TextField, Typography } from "@mui/material";
 
 interface ProductUpdateFormProps {
   productId: number; 
@@ -190,7 +190,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
             fullWidth
           />
         </Box>
-        {isUploading ? <h3>... uploading image</h3> : null}
+        {isUploading ? <><h3>... uploading image</h3> <CircularProgress color="secondary"/> </>: null}
         {imageUrl ? (
           <Box>
             <img src={imageUrl} alt="img" width={200} />

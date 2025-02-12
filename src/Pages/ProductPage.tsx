@@ -18,6 +18,7 @@ import {
   Divider,
   Alert,
   Snackbar,
+  CircularProgress,
 } from "@mui/material";
 
 interface ProductPageProps {
@@ -133,7 +134,11 @@ function ProductPage() {
     setOpenSnackbar(false);
   };
   if (isLoading === true || productData === null) {
-    return <p>Loading product....</p>;
+    return(
+        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+        <h2>Loading product</h2>
+        <CircularProgress color="secondary" />
+        </Box>)
   }
   if (error) {
     return <p>error</p>;
