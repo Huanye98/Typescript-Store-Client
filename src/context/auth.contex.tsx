@@ -1,5 +1,6 @@
 import { createContext,useEffect,useState,ReactNode } from "react";
 import service from "../service/service.config";
+import { Box, CircularProgress } from "@mui/material";
 
 interface AuthWrapperProps{
     children: ReactNode
@@ -136,7 +137,7 @@ authenticateUser()
 },[])
 
 if(isAuthenticating){
-    return( <h3>Validating credentials ...</h3>)
+    return( <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}><h3>Validating credentials ...</h3> <CircularProgress color="secondary"/></Box>)
 }
 
 return(
