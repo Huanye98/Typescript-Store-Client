@@ -145,14 +145,14 @@ function ProductPage() {
     <>
       <Nav />
       <Container>
-        <Box display={"flex"} gap={5}>
+        <Box sx={{display:"flex", flexDirection:{xs:"column", md:"row"}}} >
           {/* Left */}
-          <Box flex={1} sx={{ maxWidth: "50%" }}>
+          <Box flex={1} sx={{ maxWidth: {xs:"90%", md:"50%"} , display: "flex", flexDirection:{ xs:"row",md: "column", justifyContent:"space-between"}, gap: 2}}>
             <Typography variant="h2">{productData.name}</Typography>
             <img
               src={productData.imageurl}
               alt=""
-              style={{ width: "100%" }}
+              style={{ width: "100%", maxWidth: "250px" }}
               className="product-page-img"
             />
           </Box>
@@ -161,8 +161,8 @@ function ProductPage() {
           <Box
             flex={1}
             sx={{
-              maxWidth: "50%",
-              mt: "70px",
+              maxWidth: {xs:"100%", md:"50%"},
+              justifyContent: "space-evenly",
               display: "flex",
               flexDirection: "column",
               gap: 2,

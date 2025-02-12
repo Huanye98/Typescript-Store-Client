@@ -4,7 +4,7 @@ import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
 import { Link } from "react-router-dom";
 import PaymentIntent from "../../Components/PaymentIntent";
-import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Divider, Typography } from "@mui/material";
 
 interface Item {
   product_id: number;
@@ -103,13 +103,13 @@ function Cart() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: {xs:"column-reverse" , md:"row"},
           justifyContent: "space-between",
         }}
       >
         <Box
           className="cart-list-container"
-          sx={{ display: "flex", flexDirection: "column" }}
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center",}}
         >
           {cart.length > 0 ? cart.map((e:Item) => {
             return (
@@ -181,12 +181,12 @@ function Cart() {
           }):<Typography>Your cart is empty</Typography>}
         </Box>
 
-        <Box sx={{ backgroundColor: "white" , width:"600px", height:"400px", padding:"20px", mt:"11px"}}>
+        <Box sx={{ backgroundColor: "white" , width:{xs:"100%", md:"600px"}, height:{xs:"100%", md:"100%"}, padding:"20px", mt:"11px"}}>
 
           <p>total price: {userData.cartPrice.toFixed(2)} € </p>
           <p>Address: {userData.user_address} </p>
           <p>Name: {userData.user_name}</p>
-          
+          <Divider /> 
           <Box>
             {showPaymentIntent && stripeData ?   (
               <PaymentIntent productDetails={stripeData} />

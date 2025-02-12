@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
+import { useMediaQuery } from "react-responsive";
 
 function About() {
   const artists = [
@@ -33,16 +34,16 @@ function About() {
       linktree: "linktree.dddddd",
     },
   ];
-
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 700px)" });
   return (
     <>
       <Nav />
 
-      <Box >
-        <Box sx={{ top: "67px", margin: "100px 0" ,position:"sticky"}}>
+      <Box>
+        <Box sx={{ top: "67px", margin: "100px 0", position: "sticky" }}>
           <Typography
             variant="h2"
-            sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 , }}
+            sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 }}
           >
             Canvas & Chaos
           </Typography>
@@ -71,44 +72,64 @@ function About() {
             its own story. So, why just admire art when you can wear it, live
             it, and share it with the world? Welcome to the chaos.
           </Typography>
-          <Box sx={{ textAlign: "center" , margin:4}}>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/qh7BCluk3wc?si=TKGqy5qfN8b1P2WL"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          <Box sx={{ textAlign: "center", margin: 4 }}>
+            {isSmallScreen ? (
+              <iframe
+                width="500px"
+                height="281px"
+                src="https://www.youtube.com/embed/qh7BCluk3wc?si=TKGqy5qfN8b1P2WL"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <iframe
+                width="600px"
+                height="338px"
+                src="https://www.youtube.com/embed/qh7BCluk3wc?si=TKGqy5qfN8b1P2WL"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            )}
           </Box>
           <Typography variant="h3">Artists</Typography>
-          <Box sx={{ display: "flex", gap: 2 }}>
-            {artists.map((e,index) => {
-              return (
-                <Card>
-                  <CardMedia
-                  key={index}
-                    component="img"
-                    image="647.webp"
-                    sx={{ width: "250px" }}
-                  />
-                  <CardContent>
-                    <Typography>{e.name}</Typography>
-                    <Typography>{e.description}</Typography>
-                    <Link
-                      href="https://example.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{ color: "purple" }}
-                    >
-                      {e.linktree}
-                    </Link>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(4, 1fr)",
+              },
+              gap: 2,
+            }}
+          >
+            {artists.map((e, index) => (
+              <Card key={index}>
+                <CardMedia
+                  component="img"
+                  image="647.webp"
+                  sx={{ width: "100%" }} 
+                />
+                <CardContent>
+                  <Typography>{e.name}</Typography>
+                  <Typography>{e.description}</Typography>
+                  <Link
+                    href="https://example.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ color: "purple" }}
+                  >
+                    {e.linktree}
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
           </Box>
         </Container>
       </Box>

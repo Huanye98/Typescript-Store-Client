@@ -8,7 +8,6 @@ import {
   CardContent,
   CardMedia,
   CircularProgress,
-  Container,
   Typography,
 } from "@mui/material";
 import Slider from "react-slick";
@@ -44,10 +43,28 @@ function MainPage() {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
+    accessibility: true,
+    lazyLoad: "ondemand" as const,
     slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024, // Tablet size
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 768, // Mobile size
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   const style = {
-    maxWidth: "100vw",
+    maxWidth: "90vw",
     margin: "10px auto",
   };
 
@@ -103,7 +120,7 @@ function MainPage() {
   return (
     <>
       <Nav />
-      <Container>
+      <Box>
         <Box className="landingImage">
           <img src="/web banner.webp" alt="" style={{ width: "100%" }} />
         </Box>
@@ -128,10 +145,8 @@ function MainPage() {
             })}
           </Slider>
         </Box>
-        <Box
-          className="LandingfeaturedCollection"
-        >
-          Featured Collection
+        <Box sx={{mt:5,}}>
+          <Typography>Featured Collection</Typography>
           <img src="/web banner2.webp" alt="" style={{ width: "100%" }} />
         </Box>
         <Typography>Featured </Typography>
@@ -158,10 +173,10 @@ function MainPage() {
           )}
         </Slider>
           </Box>
-        <Box className="landingAbout" >
+        <Box sx={{mt:5,}} >
           <a href={"/about"}>
           About us
-          <img src="/web banner3.webp" alt="" style={{ width: "100vw" }} />
+          <img src="/web banner3.webp" alt="" style={{ width: "100%" }} />
           </a>
         </Box>
         <Box sx={style}>
@@ -184,7 +199,7 @@ function MainPage() {
           })}
         </Slider>
         </Box>
-      </Container>
+      </Box>
       <Footer />
     </>
   );

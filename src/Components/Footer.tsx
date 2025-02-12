@@ -12,7 +12,7 @@ function Footer() {
         bottom: 0,
         position: "relative",
         display: "flex",
-        flexDirection: "column",
+        flexDirection:  "column",
       }}
     >
       <Box
@@ -23,9 +23,8 @@ function Footer() {
           gap: 6,
           bottom: 0,
           position: "relative",
-          height: "200px",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: { xs: "column", sm: "row" },
           justifyContent: "space-between",
         }}
       >

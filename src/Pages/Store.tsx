@@ -1,4 +1,4 @@
-import { useEffect, useState, } from "react";
+import { useEffect, useState } from "react";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import service from "../service/service.config";
@@ -6,7 +6,6 @@ import StoreFilters from "../Components/StoreFilters";
 import { Box, Button, Container, Grid2 } from "@mui/material";
 import ProductCard from "../Components/ProductCard";
 import { Product } from "../Types/Types";
-
 
 function Store() {
   const [products, setProducts] = useState([]);
@@ -31,18 +30,18 @@ function Store() {
     try {
       setIsLoading(true);
 
-      let params: Record<string, any> = { limit: 9, page: pagination };
+      let params: Record<string, any> = { limit: 12, page: pagination };
       if (filterData) {
         Object.entries(filterData).forEach(([key, value]) => {
           if (value !== "") params[key] = value; // Only add non-empty filters
         });
       }
-      console.log(params)
+      console.log(params);
       const response = await service.get("/products", { params });
 
       setProducts(response.data.products);
       setTotalPages(Math.ceil(response.data.totalCount / 10));
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       console.log("was not able to get products", error);
     }
@@ -61,10 +60,14 @@ function Store() {
       <Box
         className="StoreHeader"
         sx={{
-          "& img": { width: "100%", maxWidth: "1920", left: "0", zIndex: 2 },
+          "& img": { width: "100%", left: "0", zIndex: 2 },
         }}
       >
-        <img rel="preload" src="/storeBanner.webp" alt="wide banner with pastel colors" />
+        <img
+          rel="preload"
+          src="/storeBanner.webp"
+          alt="wide banner with pastel colors"
+        />
       </Box>
       <Container sx={{ postiion: "relative" }}>
         <Box>
@@ -76,17 +79,25 @@ function Store() {
           />
 
           {/* Cards and container */}
-          <Grid2 container sx={{ padding: 2 }}>
+          <Box
+            sx={{
+              display: "grid",
+              gap: "5px",
+              textAlign: "center",
+              alignItems: "center",
+              alignContent: "center",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(4, 1fr)",
+              },
+            }}
+          >
             {products.map((product: Product, index) => {
-              return (
-                <Grid2 key={index} sx={{}}>
-                  <ProductCard
-                    product={product}
-                  />
-                </Grid2>
-              );
+              return <ProductCard product={product} key={index} />;
             })}
-          </Grid2>
+          </Box>
 
           {/* Pagination */}
           <Box
