@@ -30,10 +30,10 @@ function Store() {
     try {
       setIsLoading(true);
 
-      let params: Record<string, any> = { limit: 12, page: pagination };
+      let params: Record<string, any> = { limit: 9, page: pagination };
       if (filterData) {
         Object.entries(filterData).forEach(([key, value]) => {
-          if (value !== "") params[key] = value; // Only add non-empty filters
+          if (value !== "") params[key] = value;
         });
       }
       console.log(params);
