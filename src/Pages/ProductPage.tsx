@@ -57,7 +57,7 @@ function ProductPage() {
     slidesToScroll: 3,
   };
   const style = {
-    maxWidth: "100vw",
+    maxWidth: "90vw",
     margin: "10px auto",
   };
   useEffect(() => {

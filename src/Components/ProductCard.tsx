@@ -45,8 +45,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
           <CardMedia
             component="img"
             image={imageurl}
-            height="70%"
-            sx={{ objectFit: "cover" }}
+            sx={{ objectFit: "cover" ,width:"100% "}}
             alt={name}
           />
         )}

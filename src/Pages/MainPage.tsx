@@ -121,7 +121,7 @@ function MainPage() {
     <>
       <Nav />
       <Box>
-        <Box className="landingImage">
+        <Box className="landingImage" sx={{width:'100%'}}>
           <img src="/web banner.webp" alt="" style={{ width: "100%" }} />
         </Box>
 

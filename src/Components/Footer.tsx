@@ -28,7 +28,7 @@ function Footer() {
           justifyContent: "space-between",
         }}
       >
-        <Box>
+        <Box sx={{display:"flex", flexDirection:"column", gap:2}}>
           <Typography variant="h4">Subscribe to our newsletter</Typography>
           <Typography variant="body2">Sign up below to join, where you'll get a front-row seat to collection drops, first dibs on shiny new stuff, absurd collaborations, and random party invites. Buckle up!</Typography>
           <Box sx={{display:"flex", gap:1}}>

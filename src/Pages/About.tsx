@@ -39,8 +39,8 @@ function About() {
     <>
       <Nav />
 
-      <Box>
-        <Box sx={{ top: "67px", margin: "100px 0", position: "sticky" }}>
+      <Box sx={{display:"flex", flexDirection:"column", gap:4}}>
+        <Box sx={{ top: "30px", margin: "30px 0", position: "sticky" }}>
           <Typography
             variant="h2"
             sx={{ textAlign: "center", padding: "60px 0", zIndex: 3 }}
@@ -48,7 +48,7 @@ function About() {
             Canvas & Chaos
           </Typography>
         </Box>
-        <img src={"/aboutImage.webp"} style={{ width: "100vw", left: 0 }} />
+        <img src={"/aboutImage.webp"} style={{ width: "100%", left: 0 }} />
         <Container>
           <Typography sx={{ mb: 3 }}>
             Welcome to Canvas & Chaos – Where Art Meets Expression Step into a
@@ -72,11 +72,11 @@ function About() {
             its own story. So, why just admire art when you can wear it, live
             it, and share it with the world? Welcome to the chaos.
           </Typography>
-          <Box sx={{ textAlign: "center", margin: 4 }}>
+          <Box sx={{ textAlign: "center", my: 3 }}>
             {isSmallScreen ? (
               <iframe
-                width="500px"
-                height="281px"
+                width="auto"
+                height="auto"
                 src="https://www.youtube.com/embed/qh7BCluk3wc?si=TKGqy5qfN8b1P2WL"
                 title="YouTube video player"
                 frameBorder="0"

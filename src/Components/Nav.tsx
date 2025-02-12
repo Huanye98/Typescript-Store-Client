@@ -131,6 +131,7 @@ function Nav() {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          px:{xs:1, sm:1, md:3},
         }}
       >
         <Box>
@@ -188,7 +189,7 @@ function Nav() {
                   position: "absolute",
                   top: {xs:"54px", sm:"64px"},
                   left:0,
-                  width:"100vw",
+                  width:"100%",
                   backgroundColor: "white",
                   boxShadow: 2,
                   display: "flex",

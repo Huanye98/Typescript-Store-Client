@@ -81,16 +81,14 @@ function Store() {
           {/* Cards and container */}
           <Box
             sx={{
+              maxWidth: "100%",
               display: "grid",
               gap: "5px",
-              textAlign: "center",
-              alignItems: "center",
-              alignContent: "center",
               gridTemplateColumns: {
                 xs: "1fr",
                 sm: "repeat(2, 1fr)",
                 md: "repeat(3, 1fr)",
-                lg: "repeat(4, 1fr)",
+                lg: "repeat(3, 1fr)",
               },
             }}
           >
@@ -102,6 +100,7 @@ function Store() {
           {/* Pagination */}
           <Box
             sx={{
+              mt:3,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
