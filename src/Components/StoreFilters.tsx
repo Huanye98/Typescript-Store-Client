@@ -21,9 +21,6 @@ type StorefilersProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-
-
-
 const StoreFilters: React.FC<StorefilersProps> = ({
   setProducts,
   filterData,
@@ -109,7 +106,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             name="sort"
             id="sort"
             value={filterData.sort}
-            onChange={() => handleInputChange}
+            onChange={handleInputChange}
             label="Sort by"
             sx={selectStyles}
           >
@@ -135,7 +132,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             name="category"
             id="category"
             value={filterData.category}
-            onChange={(e) => handleInputChange(e)}
+            onChange={handleInputChange}
             label="Category"
             sx={selectStyles}
           >
@@ -156,7 +153,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             labelId="availability-label"
             name="isavaliable"
             value={filterData.isavaliable}
-            onChange={() => handleInputChange}
+            onChange={handleInputChange}
             label="Availability"
             sx={selectStyles}
           >
