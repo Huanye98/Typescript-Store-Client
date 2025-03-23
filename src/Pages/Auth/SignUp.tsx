@@ -130,7 +130,7 @@ const SignUp = () => {
               variant="outlined"
               fullWidth
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <Button type="submit" variant="contained"  sx={{ "&:hover": { backgroundColor: "secondary.main" } }} fullWidth>
               {loading ? "Signing up ..." : "Sign Up"}
             </Button>
           </Box>

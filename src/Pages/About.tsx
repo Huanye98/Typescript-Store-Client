@@ -7,6 +7,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import { useMediaQuery } from "react-responsive";
@@ -14,24 +15,28 @@ import { useMediaQuery } from "react-responsive";
 function About() {
   const artists = [
     {
-      name: "A",
-      description: "aaaaaaa",
-      linktree: "linktree.aaaaaa",
+      name: "Zuko Dave",
+      description: "2D animator and pixel artist",
+      instagram: "https://www.instagram.com/zuko.dave/",
+      image: "ZukoDave.webp",
     },
     {
-      name: "B",
-      description: "bbbbbbb",
-      linktree: "linktree.bbbbbb",
+      name: "Marinart",
+      description: "Illustrator",
+      instagram: "https://www.instagram.com/_marinart/?hl=en",
+      image: "Marinart.webp",
     },
     {
-      name: "C",
-      description: "ccccccc",
-      linktree: "linktree.cccccc",
+      name: "Marta Doblas",
+      description: "Musician, illustrator and sculptor",
+      instagram: "https://www.instagram.com/martadoblas/?hl=en",
+      image: "MartaDoblas.webp",
     },
     {
-      name: "D",
-      description: "ddddddd",
-      linktree: "linktree.dddddd",
+      name: "Nubilae",
+      description: "Illustrator and comic artist",
+      instagram: "https://www.instagram.com/nubilae/?hl=en",
+      image: "Nubilae.webp",
     },
   ];
   const isSmallScreen = useMediaQuery({ query: "(max-width: 700px)" });
@@ -111,22 +116,26 @@ function About() {
           >
             {artists.map((e, index) => (
               <Card key={index}>
+               
                 <CardMedia
                   component="img"
-                  image="647.webp"
+                  image={e.image}
                   sx={{ width: "100%" }} 
                 />
                 <CardContent>
-                  <Typography>{e.name}</Typography>
+                  <Typography variant="h4">{e.name}</Typography>
                   <Typography>{e.description}</Typography>
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <InstagramIcon />
                   <Link
-                    href="https://example.com"
+                    href={e.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{ color: "purple" }}
                   >
-                    {e.linktree}
+                    {e.name}
                   </Link>
+                  </Box>
                 </CardContent>
               </Card>
             ))}

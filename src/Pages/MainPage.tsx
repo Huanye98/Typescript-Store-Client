@@ -121,12 +121,12 @@ function MainPage() {
     <>
       <Nav />
       <Box>
-        <Box className="landingImage" sx={{width:'100%'}}>
+        <Box className="landingImage" sx={{width:'100%', mb:5}}>
           <img src="/web banner.webp" alt="" style={{ width: "100%" }} />
         </Box>
 
         <Box className="landingScrollingText"></Box>
-        <Typography> New Arrivals</Typography>
+        <Typography sx={{ml:"15px"}}> New Arrivals</Typography>
         <Box style={style}>
           <Slider {...settings} >
             {newArrivals.map((product:Product, index) => {
@@ -146,10 +146,10 @@ function MainPage() {
           </Slider>
         </Box>
         <Box sx={{mt:5,}}>
-          <Typography>Featured Collection</Typography>
+          <Typography sx={{ml:"15px"}}>Featured Collection</Typography>
           <img src="/web banner2.webp" alt="" style={{ width: "100%" }} />
         </Box>
-        <Typography>Featured </Typography>
+        <Typography sx={{ml:"15px"}}>Featured </Typography>
         <Box sx={style}>
         <Slider {...settings} >
           {featuredItems.length > 0 ? (
@@ -169,13 +169,15 @@ function MainPage() {
               );
             })
           ) : (
-            <Typography> no products</Typography>
+            <Typography sx={{ml:"15px"}}> no products</Typography>
           )}
         </Slider>
           </Box>
-        <Box sx={{mt:5,}} >
+        <Box sx={{mt:5}} >
           <a href={"/about"}>
+          <Typography sx={{ml:"15px"}}>
           About us
+          </Typography>
           <img src="/web banner3.webp" alt="" style={{ width: "100%" }} />
           </a>
         </Box>
