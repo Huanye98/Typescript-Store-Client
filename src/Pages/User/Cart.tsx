@@ -270,8 +270,8 @@ function Cart() {
         >
           <Box sx={{ mb: "15px" }}>
             <p>Total price: {userData.cartPrice.toFixed(2)} € </p>
-            <p>Address: {userData.user_address} </p>
-            <p>Name: {userData.user_name}</p>
+            {/* <p>Address: {userData.user_address} </p>
+            <p>Name: {userData.user_name}</p> */}
           </Box>
           <Divider />
           <Box sx={{ display: "flex", justifyContent: "center", mt: "15px" }}>
