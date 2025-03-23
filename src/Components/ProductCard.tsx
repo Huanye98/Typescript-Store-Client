@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
   const { id, name, imageurl, finalPrice, category, isavaliable, stock, discountvalue, price } =
     product;
 
-  const { fetchCart, addToCart, loggedUserId, loggedUserCartId } =
+  const { fetchCart, addToCart, loggedUserId, loggedUserCartId,isAdmin } =
     useContext(AuthContext);
   return (
     <Card
@@ -99,23 +99,35 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
           <Typography>{finalPrice.toFixed(2)}€</Typography>
         </CardContent>
       </Link>
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{
-          "&:hover": { backgroundColor: "secondary.main" },
-        }}
-        onClick={() => {
-          if (loggedUserId !== null && loggedUserCartId !== null) {
-            addToCart(Number(id), 1, loggedUserId, loggedUserCartId);
-            fetchCart(loggedUserId);
-          } else {
-            console.error("loggedUserId or loggedUserCartId is null");
-          }
-        }}
-      >
-        Add to cart
-      </Button>
+      {!isAdmin && ( stock > 0 && isavaliable ? 
+        (<Button
+          variant="contained"
+          fullWidth
+          sx={{
+            "&:hover": { backgroundColor: "secondary.main" },
+          }}
+          onClick={() => {
+            if (loggedUserId !== null && loggedUserCartId !== null) {
+              addToCart(Number(id), 1, loggedUserId, loggedUserCartId);
+              fetchCart(loggedUserId);
+            } else {
+              console.error("loggedUserId or loggedUserCartId is null");
+            }
+          }}
+        >
+          Add to cart
+        </Button>): 
+        (<Button
+          variant="contained"
+          fullWidth
+          sx={{
+            "&:hover": { backgroundColor: "#d32f2f" },
+          }}>
+          Out of stock
+          </Button>)
+      )
+      } 
+      
     </Card>
   );
 };

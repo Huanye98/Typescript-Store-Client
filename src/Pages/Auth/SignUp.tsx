@@ -84,6 +84,18 @@ const SignUp = () => {
     e.preventDefault();
     register(formData);
   }
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'black',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      '&.Mui-focused': {
+        color: "#eb851e",
+      },
+    },
+  };
   return (
     <>
       <Nav />
@@ -98,6 +110,7 @@ const SignUp = () => {
               width: "50%",
               justifySelf: "center",
               margin: "200px 0",
+              
             }}
           >
             <TextField
@@ -109,6 +122,7 @@ const SignUp = () => {
               required
               variant="outlined"
               fullWidth
+              sx={inputStyles}
             />
             <TextField
               label="Password"
@@ -119,9 +133,10 @@ const SignUp = () => {
               required
               variant="outlined"
               fullWidth
+              sx={inputStyles}
             />
             <TextField
-              label="repeatPassword"
+              label="Repeat password"
               type="password"
               name="repeatPassword"
               value={formData.repeatPassword}
@@ -129,7 +144,9 @@ const SignUp = () => {
               required
               variant="outlined"
               fullWidth
+              sx={inputStyles}
             />
+            
             <Button type="submit" variant="contained"  sx={{ "&:hover": { backgroundColor: "secondary.main" } }} fullWidth>
               {loading ? "Signing up ..." : "Sign Up"}
             </Button>

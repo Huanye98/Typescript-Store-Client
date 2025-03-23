@@ -3,7 +3,7 @@ import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Box, Button,Alert } from "@mui/material";
+import { Container, Box, Button,Alert,TextField } from "@mui/material";
 
 interface FormData {
   email: string;
@@ -41,6 +41,18 @@ const Login = () => {
     e.preventDefault();
     validateLogin(formData);
   }
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'black',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      '&.Mui-focused': {
+        color: "#eb851e",
+      },
+    },
+  };
   return (
     <>
       <Nav />
@@ -69,25 +81,29 @@ const Login = () => {
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="email">Email: </label>
-            <input
+
+            <TextField
+            label="Email:"
               type="email"
               name="email"
               id="email"
               value={formData.email}
               onChange={handleChange}
               required
+              sx={inputStyles}
             />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="password">Password: </label>
-            <input
+
+            <TextField
+            label="Password:"
               type="password"
               name="password"
               id="password"
               value={formData.password}
               onChange={handleChange}
               required
+              sx={inputStyles}
             />
           </Box>
           <Button

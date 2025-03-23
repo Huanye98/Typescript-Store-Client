@@ -163,15 +163,15 @@ function Nav() {
               )}
               {!isAdmin && (
                 <>
+                  <Link to={"/profile"}>
+                    <Typography>Profile</Typography>
+                  </Link>
                   <Link to={"/cart"}>
                     <IconButton>
                       <Badge badgeContent={cartCount} color="primary">
                         <ShoppingCartIcon sx={{ color: "secondary" }} />
                       </Badge>
                     </IconButton>
-                  </Link>
-                  <Link to={"/profile"}>
-                    <Typography>Profile</Typography>
                   </Link>
                 </>
               )}

@@ -6,10 +6,10 @@ import {
   Select,
   Button,
   MenuItem,
-  SelectChangeEvent
+  SelectChangeEvent,
 } from "@mui/material";
 type FilterData = {
-  sort:string
+  sort: string;
   category: string;
   isavaliable: string;
 };
@@ -27,8 +27,10 @@ const StoreFilters: React.FC<StorefilersProps> = ({
   setFilterData,
   setPage,
 }) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>) => {
-    const { name, value} = e.target;
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>
+  ) => {
+    const { name, value } = e.target;
 
     setFilterData((prevData: FilterData) => ({
       ...prevData,
@@ -59,6 +61,9 @@ const StoreFilters: React.FC<StorefilersProps> = ({
       setPage(1);
       console.log("filtered products", response.data);
       setProducts(response.data.products);
+      setFilterData({
+        sort: "", category: "", isavaliable: ""
+      });
     } catch (error) {
       console.log("failed to get filtered products", error);
     }
@@ -67,18 +72,21 @@ const StoreFilters: React.FC<StorefilersProps> = ({
   const selectStyles = {
     width: {
       xs: "100%",
-      sm: "150px",
+      sm: "auto",
     },
+    minWidth: {sm: "100px"},
     height: "80%",
     top: "5px",
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "black",
+    },
   };
 
   return (
     <Box
       sx={{
-        backgroundColor: "primary.main",
         borderRadius: "5%",
-        margin: 1,
+        margin: "10px 15px",
       }}
     >
       <Box
@@ -87,7 +95,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
         sx={{
           display: "flex",
           gap: {
-            xs: 1,
+            xs: 2,
             sm: 3,
           },
           justifyContent: "space-evenly",
@@ -96,11 +104,14 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             xs: "column",
             sm: "row",
           },
+          padding: 2,
         }}
       >
         {/* Sort by Dropdown */}
         <FormControl>
-          <InputLabel id="sort-label">Sort by</InputLabel>
+          <InputLabel id="sort-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+            Sort by
+          </InputLabel>
           <Select
             labelId="sort-label"
             name="sort"
@@ -108,11 +119,10 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             value={filterData.sort}
             onChange={handleInputChange}
             label="Sort by"
+            displayEmpty
             sx={selectStyles}
           >
-            <MenuItem value="">
-              <em>Select</em>
-            </MenuItem>
+            <MenuItem value="">Select</MenuItem>
             <MenuItem value="price:asc">Price ascending</MenuItem>
             <MenuItem value="price:desc">Price descending</MenuItem>
             <MenuItem value="name:asc">Name ascending</MenuItem>
@@ -126,7 +136,9 @@ const StoreFilters: React.FC<StorefilersProps> = ({
 
         {/* Category Dropdown */}
         <FormControl>
-          <InputLabel id="category-label">Category</InputLabel>
+          <InputLabel id="category-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+            Category
+          </InputLabel>
           <Select
             labelId="category-label"
             name="category"
@@ -134,11 +146,10 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             value={filterData.category}
             onChange={handleInputChange}
             label="Category"
+            displayEmpty
             sx={selectStyles}
           >
-            <MenuItem value="">
-              <em>Select</em>
-            </MenuItem>
+            <MenuItem value="">Select</MenuItem>
             <MenuItem value="Apparel">Apparel</MenuItem>
             <MenuItem value="Home goods">Home goods</MenuItem>
             <MenuItem value="Digital goods">Digital goods</MenuItem>
@@ -148,7 +159,9 @@ const StoreFilters: React.FC<StorefilersProps> = ({
 
         {/* Availability Dropdown */}
         <FormControl>
-          <InputLabel id="availability-label">Availability</InputLabel>
+          <InputLabel id="availability-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+            Availability
+          </InputLabel>
           <Select
             labelId="availability-label"
             name="isavaliable"
@@ -156,19 +169,43 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             onChange={handleInputChange}
             label="Availability"
             sx={selectStyles}
+            displayEmpty
           >
+            <MenuItem value="">Select</MenuItem>
             <MenuItem value="true">Available</MenuItem>
             <MenuItem value="false">Not Available</MenuItem>
           </Select>
         </FormControl>
-
-        {/* Submit Button */}
+        
         <Button
-          variant="contained"
           type="submit"
-          sx={{ alignSelf: "center", margin: { xs: 1.5 } }}
+          variant="contained"
+          sx={{
+            width: "auto",
+            height: "80%",
+            alignSelf: "center",
+          }}
+          onClick={sendFilters}
         >
           Search
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            width: "auto",
+            height: "80%",
+            alignSelf: "center",
+          }}
+          onClick={() => {
+            setFilterData({
+              sort: "", category: "", isavaliable: ""
+            });
+            setTimeout(() => {
+              sendFilters();
+            }, 100);
+          }}
+        >
+          Reset
         </Button>
       </Box>
     </Box>

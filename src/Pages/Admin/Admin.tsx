@@ -3,7 +3,7 @@ import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Select, MenuItem, Button, FormControl, InputLabel, CircularProgress,Typography, Container } from '@mui/material';
-
+import { SelectChangeEvent } from "@mui/material";
 function Admin() {
   const defaultFormData = {
     name: "",
@@ -33,16 +33,22 @@ function Admin() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]:
-        type === "number" && name !== "price"
-          ? +value 
-          : value,
+      [name]: ["price", "discountvalue", "stock"].includes(name) ? Number(value) : value,
+      
     }));
   };
+  const handleSelectChange = (e: SelectChangeEvent<String>) => { 
+    const {name,value} = e.target
 
+    setFormData((prevData) => ({
+      ...prevData,
+      [name as string]: value === "true" ? true : value === "false" ? false : value,
+    }));
+  }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("form submitted", formData);
@@ -77,11 +83,28 @@ function Admin() {
     }
   };
 
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'black',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      '&.Mui-focused': {
+        color: 'black',
+      },
+    },
+  };
+  const selectStyles = {
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "black",
+    },
+  };
   return (
     <>
       <Nav />
       <Typography variant="h3" sx={{margin:"15px"}}>Create new product</Typography>
-      <Container >
+      <Container sx={{mb:"30px"}}>
         <form onSubmit={handleSubmit}>
           {/* Product Name */}
           <Box sx={{ marginBottom: 2 }}>
@@ -94,6 +117,7 @@ function Admin() {
               onChange={handleInputChange}
               required
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 
@@ -108,6 +132,7 @@ function Admin() {
               onChange={handleInputChange}
               required
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 
@@ -121,20 +146,22 @@ function Admin() {
               value={formData.description}
               onChange={handleInputChange}
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 
           {/* Availability */}
           <Box sx={{ marginBottom: 2 }}>
             <FormControl fullWidth>
-              <InputLabel id="isavaliable-label">Availability</InputLabel>
+              <InputLabel id="isavaliable-label" sx={{ "&.Mui-focused": {color: "#eb851e"}}}>Availability</InputLabel>
               <Select
                 labelId="isavaliable-label"
                 id="isavaliable"
                 name="isavaliable"
                 value={formData.isavaliable}
-                onChange={()=>handleInputChange}
+                onChange={handleSelectChange}
                 label="Availability"
+                sx={selectStyles}
               >
                 <MenuItem value="true">Available</MenuItem>
                 <MenuItem value="false">Not Available</MenuItem>
@@ -145,14 +172,15 @@ function Admin() {
           {/* Featured */}
           <Box sx={{ marginBottom: 2 }}>
             <FormControl fullWidth>
-              <InputLabel id="is_featured-label">Featured</InputLabel>
+              <InputLabel id="is_featured-label" sx={{ "&.Mui-focused": {color: "#eb851e"}}}>Featured</InputLabel>
               <Select
                 labelId="is_featured-label"
                 id="is_featured"
                 name="is_featured"
                 value={formData.is_featured}
-                onChange={()=>handleInputChange}
+                onChange={handleSelectChange}
                 label="Featured"
+                sx={selectStyles}
               >
                 <MenuItem value="true">Featured</MenuItem>
                 <MenuItem value="false">Not Featured</MenuItem>
@@ -163,14 +191,16 @@ function Admin() {
           {/* Category */}
           <Box sx={{ marginBottom: 2 }}>
             <FormControl fullWidth>
-              <InputLabel id="category-label">Category</InputLabel>
+              <InputLabel id="category-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>Category</InputLabel>
               <Select
                 labelId="category-label"
                 id="category"
                 name="category"
                 value={formData.category}
-                onChange={()=>handleInputChange}
+                onChange={handleSelectChange}
+                displayEmpty
                 label="Category"
+                sx={selectStyles}
               >
                 <MenuItem value="">Select</MenuItem>
                 <MenuItem value="Apparel">Apparel</MenuItem>
@@ -192,6 +222,7 @@ function Admin() {
               value={formData.discountvalue}
               onChange={handleInputChange}
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 
@@ -205,6 +236,7 @@ function Admin() {
               value={formData.collection_id}
               onChange={handleInputChange}
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 
@@ -218,6 +250,7 @@ function Admin() {
               value={formData.stock}
               onChange={handleInputChange}
               fullWidth
+              sx={inputStyles}
             />
           </Box>
 

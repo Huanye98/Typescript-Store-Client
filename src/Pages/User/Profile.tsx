@@ -70,18 +70,20 @@ function Profile() {
 
     try {
       await service.patch(`/users/modify/${loggedUserId}`, payload);
-      if (field === "password") {
-        setSuccessMessage("Password updated successfully");
-        setOpenSnackbar(true);
-      } else if (field === "address") {
-        setSuccessMessage("Address updated successfully");
-        setOpenSnackbar(true);
-      } else if (field === "email") {
-        setSuccessMessage("Email updated successfully");
-        setOpenSnackbar(true);
-      }
+
+      setErrorMessage("");
+      let successText = "";
+    if (field === "password") successText = "Password updated successfully";
+    else if (field === "address") successText = "Address updated successfully";
+    else if (field === "email") successText = "Email updated successfully";
+      setSuccessMessage(successText);
+      setOpenSnackbar(true);
     } catch (error) {
       console.error("Was not able to updata user information", error);
+      setSuccessMessage("");
+
+    setErrorMessage("Failed to update. Please try again.");
+    setOpenSnackbar(true);
     }
   };
 
