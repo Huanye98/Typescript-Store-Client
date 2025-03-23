@@ -80,7 +80,7 @@ function Admin() {
   return (
     <>
       <Nav />
-      <Typography variant="h3">Create new product</Typography>
+      <Typography variant="h3" sx={{margin:"15px"}}>Create new product</Typography>
       <Container >
         <form onSubmit={handleSubmit}>
           {/* Product Name */}

@@ -92,7 +92,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
         onSubmit={handleFormSubmit}
         sx={{
           maxWidth: "400px",
-          mx: "auto", // Center the form horizontally
+          mx: "auto", 
           display: "flex",
           flexDirection: "column",
           gap: 1,

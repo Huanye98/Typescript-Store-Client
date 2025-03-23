@@ -16,7 +16,7 @@ interface ProductCardComponentProps {
 }
 
 const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
-  const { id, name, imageurl, finalPrice, category, isavaliable, stock } =
+  const { id, name, imageurl, finalPrice, category, isavaliable, stock, discountvalue, price } =
     product;
 
   const { fetchCart, addToCart, loggedUserId, loggedUserCartId } =
@@ -84,6 +84,18 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
           }}
         >
           <Typography>{name}</Typography>
+          {discountvalue > 0 && (
+            <Typography
+              sx={{
+                color: "red",
+                fontSize: "0.8rem",
+              }}
+            >
+              <span><s>{price}€</s> {discountvalue*100}% off</span>
+
+            </Typography>
+            
+          )}
           <Typography>{finalPrice.toFixed(2)}€</Typography>
         </CardContent>
       </Link>
