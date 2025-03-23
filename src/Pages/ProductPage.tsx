@@ -185,7 +185,7 @@ function ProductPage() {
             {productData.discountvalue != 0 && (
               <>
                 <Typography variant="body1">
-                  discount:{productData.discountvalue * 100}%
+                  Discount:{productData.discountvalue * 100}%
                 </Typography>
                 <Typography variant="body1">
                   Original price: {productData.price}€

@@ -189,9 +189,8 @@ function Cart() {
           }):<Typography>Your cart is empty</Typography>}
         </Box>
 
-        <Box sx={{ backgroundColor: "white" , width:{xs:"100%", md:"600px"}, height:{xs:"100%", md:"100%"}, padding:"20px", mt:"11px"}}>
-
-          <p>total price: {userData.cartPrice.toFixed(2)} € </p>
+        <Box sx={{ backgroundColor: "white" ,position:{xs:"relative",sm:"relative",md:"absolute"}, width:{xs:"100%", md:"600px"}, height:{xs:"auto", md:"auto"}, padding:"20px",right:0,top:{xs:0,sm:0, md:"60px"}, mt:"15px"}}>
+          <p>Total price: {userData.cartPrice.toFixed(2)} € </p>
           <p>Address: {userData.user_address} </p>
           <p>Name: {userData.user_name}</p>
           <Divider /> 
