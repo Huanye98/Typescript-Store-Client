@@ -85,6 +85,18 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
       navigate("/error");
     }
   };
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: "black",
+      },
+    },
+    '& .MuiInputLabel-root': {
+      '&.Mui-focused': {
+        color: "#eb851e",
+      },
+    },
+  };
   return (
     <Container sx={{display: "flex", maxWidth:"600px", flexDirection:"column", mx:"auto", gap:1, mb:3}} >
       <Box
@@ -107,6 +119,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.name}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           fullWidth
@@ -116,6 +129,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           name="price"
           value={formData.price}
           onChange={handleInputChange}
+          sx={inputStyles}
         />
         <TextField
           label="despription"
@@ -125,6 +139,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.description}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="discount value ie: 0.5"
@@ -134,6 +149,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.discountValue}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="category"
@@ -143,6 +159,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.category}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="collection ID"
@@ -152,6 +169,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.collection_Id}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="stock"
@@ -161,6 +179,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.stock}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="Featured"
@@ -170,6 +189,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.is_Featured}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <TextField
           label="Avaliability"
@@ -179,6 +199,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           value={formData.isAvaliable}
           onChange={handleInputChange}
           fullWidth
+          sx={inputStyles}
         />
         <Box>
           <Typography variant="body1">Image Url: </Typography>

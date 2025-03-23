@@ -126,7 +126,7 @@ function MainPage() {
         </Box>
 
         <Box className="landingScrollingText"></Box>
-        <Typography sx={{ml:"15px"}}> New Arrivals</Typography>
+        <Typography variant="h3" sx={{ml:"15px"}}> New Arrivals</Typography>
         <Box style={style}>
           <Slider {...settings} >
             {newArrivals.map((product:Product, index) => {
@@ -146,10 +146,10 @@ function MainPage() {
           </Slider>
         </Box>
         <Box sx={{mt:5,}}>
-          <Typography sx={{ml:"15px"}}>Featured Collection</Typography>
+          <Typography variant="h3" sx={{ml:"15px"}}>Featured Collection</Typography>
           <img src="/web banner2.webp" alt="" style={{ width: "100%" }} />
         </Box>
-        <Typography sx={{ml:"15px"}}>Featured </Typography>
+        <Typography variant="h3" sx={{ml:"15px"}}>Featured </Typography>
         <Box sx={style}>
         <Slider {...settings} >
           {featuredItems.length > 0 ? (
@@ -175,14 +175,14 @@ function MainPage() {
           </Box>
         <Box sx={{mt:5}} >
           <a href={"/about"}>
-          <Typography sx={{ml:"15px"}}>
+          <Typography variant="h3" sx={{ml:"15px"}}>
           About us
           </Typography>
           <img src="/web banner3.webp" alt="" style={{ width: "100%" }} />
           </a>
         </Box>
         <Box sx={style}>
-        <Typography> Hot!</Typography>
+        <Typography variant="h3"> Hot!</Typography>
         <Slider {...settings} >
           {popularItems.map((product:Product, index) => {
             return (
