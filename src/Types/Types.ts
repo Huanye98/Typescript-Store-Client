@@ -9,6 +9,7 @@ export interface Product {
   isavaliable: boolean;
   isFeatured: boolean;
   category: string;
+  price: number;
 }
 
 export interface User {
