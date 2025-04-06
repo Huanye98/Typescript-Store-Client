@@ -11,6 +11,7 @@ import Profile from "./Pages/User/Profile"
 import Error400 from "./Pages/Error/500";
 import PaymentSuccess from "./Components/PaymentSuccess";
 import Error500 from "./Pages/Error/500";
+import VerifyEmail from "./Pages/Auth/VerifyEmail";
 
 const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
         <Route path="/cart" element={<Cart/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/payment-success" element={ <PaymentSuccess/> }/>
+        <Route path="/verify-email" element={ <VerifyEmail/> }/>
         <Route path="/error500" element={<Error500/>} />
         <Route path="/*" element={<Error400/>} />
       </Routes>

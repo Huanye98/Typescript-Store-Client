@@ -2,8 +2,16 @@ import { useContext, useState } from "react";
 import Nav from "../../Components/Nav";
 import service from "../../service/service.config";
 import { AuthContext } from "../../context/auth.contex";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Box, Button,Alert,TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { isAxiosError } from "axios";
+import {
+  Container,
+  Box,
+  Button,
+  TextField,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 interface FormData {
   email: string;
@@ -11,10 +19,10 @@ interface FormData {
 }
 
 const Login = () => {
-  const { authenticateUser, isAdmin, isLoggedIn } = useContext(AuthContext);
+  const { authenticateUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
-  const fromSignup = location.state?.fromSignup;
+  const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,28 +35,45 @@ const Login = () => {
   const validateLogin = async (credentials: FormData) => {
     try {
       const response = await service.post("/users/login", credentials);
-      console.log(response);
       localStorage.setItem("token", response.data.token);
       await authenticateUser();
-      console.log(isLoggedIn, isAdmin);
-      console.log("log in successful");
       navigate("/store");
-    } catch (error) {
-      console.log("was not able to log in", error);
+    } catch (error:unknown) {
+      if (isAxiosError(error) && error.response) {
+        if (
+          error.response.status === 401 &&
+          error.response.data?.error === "Email not verified"
+        ) {
+          setOpen(true);
+          setErrorMessage("Email not verified. Please check your inbox.");
+        } else {
+          console.error("An unexpected error occurred:", error);
+          setOpen(true);
+          setErrorMessage("Invalid email or password.");
+        }
+      } else {
+        console.error("An unexpected error occurred:", error);
+        setOpen(true);
+        setErrorMessage("Something went wrong. Please try again.");
+      }
     }
   };
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     validateLogin(formData);
   }
+  const handleClose = () => {
+    setOpen(false);
+    setErrorMessage("");
+  };
   const inputStyles = {
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'black',
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "black",
       },
     },
-    '& .MuiInputLabel-root': {
-      '&.Mui-focused': {
+    "& .MuiInputLabel-root": {
+      "&.Mui-focused": {
         color: "#eb851e",
       },
     },
@@ -56,19 +81,20 @@ const Login = () => {
   return (
     <>
       <Nav />
-      <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center" , justifyContent: "center", mt: 25}}>
-        <Box>
-          {fromSignup && (
-            <Alert severity="success">
-              Registration successful! You can now log in.
-            </Alert>
-          )}
-        </Box>
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          mt: 25,
+        }}
+      >
         <Box
           component={"form"}
           onSubmit={handleSubmit}
           sx={{
-            width:"350px",
+            width: "350px",
             backgroundColor: "primary.main",
             display: "flex",
             flexDirection: "column",
@@ -81,9 +107,8 @@ const Login = () => {
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-
             <TextField
-            label="Email:"
+              label="Email:"
               type="email"
               name="email"
               id="email"
@@ -94,9 +119,8 @@ const Login = () => {
             />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-
             <TextField
-            label="Password:"
+              label="Password:"
               type="password"
               name="password"
               id="password"
@@ -114,6 +138,16 @@ const Login = () => {
             Log in
           </Button>
         </Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          message={errorMessage}
+        >
+          <Alert severity="error" sx={{ width: "100%" }}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
       </Container>
     </>
   );
