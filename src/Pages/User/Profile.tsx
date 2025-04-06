@@ -2,7 +2,8 @@ import Nav from "../../Components/Nav";
 import { AuthContext } from "../../context/auth.contex";
 import { useContext, useEffect, useState } from "react";
 import service from "../../service/service.config";
-import { Box, TextField, Button, Alert, Snackbar, CircularProgress } from "@mui/material";
+import { Box,DialogTitle,DialogContentText,DialogActions, TextField, Button, Alert, Snackbar, CircularProgress, Dialog, DialogContent } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 interface form {
@@ -16,7 +17,7 @@ interface UserData {
   address: string;
 }
 function Profile() {
-  const { loggedUserId } = useContext(AuthContext);
+  const { loggedUserId, authenticateUser } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -27,11 +28,11 @@ function Profile() {
     repeatPassword: "",
     address: "",
   });
-
+  const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     fetchUserData();
   }, [loggedUserId]);
-
+  const navigate = useNavigate();
   const fetchUserData = async () => {
     try {
       const response = await service.get(`/users/${loggedUserId}`);
@@ -43,7 +44,7 @@ function Profile() {
   };
   const validatePassword = () => {
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
     // Validate password
     if (!passwordRegex.test(formData.password)) {
       setErrorMessage(
@@ -86,7 +87,39 @@ function Profile() {
     setOpenSnackbar(true);
     }
   };
-
+  const deleteAccount = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setErrorMessage("There was an error. Please log in again.");
+      setOpenSnackbar(true);
+      return;
+    }
+    try { 
+       await service.delete(`/users/${loggedUserId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+       );
+      setErrorMessage("");
+      setSuccessMessage("Account deleted successfully.");
+      setOpenSnackbar(true);
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        authenticateUser();
+        navigate("/login"); 
+      }, 1500); 
+    }
+    catch (error) {
+      console.error("Failed to delete account", error);
+      setSuccessMessage("");
+      setErrorMessage("Failed to delete account. Please try again.");
+      setOpenSnackbar(true);
+    }
+  }
+  const handleOpenDialog = () => {setOpenDialog(true);}
+  const handleCloseDialog = () => {setOpenDialog(false);}
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -192,6 +225,26 @@ function Profile() {
             Change password
           </Button>
         </Box>
+
+        <Button variant="contained" onClick={handleOpenDialog} color="error">
+          Delete account
+        </Button>
+        <Dialog open = {openDialog} onClose={handleCloseDialog}>
+          <DialogTitle> Confirm Account Deletion</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete your account? This action cannot be undone.
+            </DialogContentText>
+            <DialogActions>
+              <Button  color="warning" onClick={handleCloseDialog}>
+                Cancel
+                </Button>
+                <Button onClick={deleteAccount} color="error">
+                Delete
+                </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       </Box>
     </>
   );

@@ -151,8 +151,7 @@ function Cart() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-
-            mt: "15px",
+            mt: "10px",
           }}
         >
           {cart.length > 0 && cart[0].product_id !== null ? (
@@ -169,7 +168,7 @@ function Cart() {
                     sx={{ width: "40%" }}
                   />
                   <CardContent
-                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                    sx={{ display: "flex", flexDirection: "column", gap: "15px" }}
                   >
                     <Link to={`/store/${e.product_id}`}>
                       <p>{e.product_name}</p>
@@ -263,7 +262,7 @@ function Cart() {
             top:{xs: "63px", sm: "63px", md: "auto"},
             width: { xs: "100%", md: "auto" },
             height: { xs: "auto", md: "100%" },
-            mt: "26px",
+            mt: "25px",
             mr: "15px",
             padding: "20px 60px",
           }}
