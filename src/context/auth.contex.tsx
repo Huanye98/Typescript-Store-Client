@@ -50,7 +50,7 @@ const authenticateUser = async ()=>{
         setIsAuthenticating(false)
         setLoggedUserId(null)
         setLoggedUserCartId(null)
-        console.log("no token found")
+        console.error("no token found")
         return
     }
     try {
@@ -68,10 +68,8 @@ const authenticateUser = async ()=>{
         }else{
             setIsAdmin(false)
         }
-       
-        console.log("authenticateUser successfull")
     } catch (error) {
-        console.log("was not able to authenticate user",error);
+        console.error("was not able to authenticate user",error);
       setIsLoggedIn(false);
       setLoggedUserId(null);
       setIsAuthenticating(false);
@@ -91,9 +89,8 @@ const fetchCart = async (userId:number) => {
       const fetchedCart:CartItem[] = response.data.response[0].cart_items 
       const totalQuantity = fetchedCart.reduce((total:number,item:CartItem)=>total + item.quantity, 0)
       setCartCount(totalQuantity)  
-      console.log("fetchCart")
     }catch(error){
-        console.log(error)
+        console.error(error)
     }
   }
   const addToCart = async (itemId:number, quantity:number,userId:number,cartId:number) => {
@@ -107,16 +104,14 @@ const fetchCart = async (userId:number) => {
       user_id: userId,
       cart_id: cartId
     };
-    console.log(payload)
     try {
       const response = await service.post("/users/cart", payload);
       if(loggedUserCartId && loggedUserId){
           await fetchCart(loggedUserId)
       }
-      console.log("product added")
       return { success: true, data: response.data }
     } catch (error:unknown) {
-      console.log("was not able to add to cart", error);
+      console.error("was not able to add to cart", error);
       return { success: false, error:(error as any).response?.data || (error as Error).message }
     }
   };

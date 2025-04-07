@@ -40,7 +40,6 @@ const StoreFilters: React.FC<StorefilersProps> = ({
 
   const handleFilterFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(filterData);
     sendFilters();
   };
   const sendFilters = async () => {
@@ -53,19 +52,17 @@ const StoreFilters: React.FC<StorefilersProps> = ({
       .join("&");
 
     const url = `/products?${queryParams}`;
-    console.log(url);
     try {
       const response = await service.get(url, {
         params: { limit: 9, page: 1 },
       });
       setPage(1);
-      console.log("filtered products", response.data);
       setProducts(response.data.products);
       setFilterData({
         sort: "", category: "", isavaliable: ""
       });
     } catch (error) {
-      console.log("failed to get filtered products", error);
+      console.error("failed to get filtered products", error);
     }
   };
 

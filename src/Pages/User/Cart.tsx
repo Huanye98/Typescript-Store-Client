@@ -55,7 +55,6 @@ function Cart() {
       const fetchedCart = response.data.response[0].cart_items;
       setCart(fetchedCart);
       setUserData(response.data.response[0]);
-      console.log(response.data.response[0]);
 
       //stripè data set up
       const totalAmount =
@@ -84,7 +83,7 @@ function Cart() {
         fetchUserData();
       }
     } catch (error) {
-      console.log("was not able to cart");
+      console.error("was not able to cart");
     }
   };
   const deleteFromCart = async (productId: number, productQuantity: number) => {

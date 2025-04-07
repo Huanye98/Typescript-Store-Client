@@ -57,7 +57,6 @@ const SignUp = () => {
     if (!validateForm()) {
       return;
     }
-    console.log(formData);
     try {
       await service.post("/users/create", userData);
       await service.post("/users/send-verification-email", {email: userData.email});
@@ -65,7 +64,7 @@ const SignUp = () => {
         "Registration successful! Please check your email for verification.")
       setOpenSuccessSnackbar(true);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       if (error.response && error.response.status === 409) {
         setErrorMessage("There was an error with the email you provided.");
         setOpenErrorSnackbar(true);

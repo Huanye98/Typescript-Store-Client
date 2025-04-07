@@ -1,16 +1,28 @@
 import { useState } from "react";
 import service from "../../service/service.config";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, CircularProgress, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 interface ProductUpdateFormProps {
-  productId: number; 
+  productId: number;
   handleDelete: () => void;
   setSuccessMessage: (message: string) => void;
   setOpenSnackbar: (open: boolean) => void;
 }
 
-function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSnackbar }:ProductUpdateFormProps) {
+function ProductUpdateForm({
+  productId,
+  handleDelete,
+  setSuccessMessage,
+  setOpenSnackbar,
+}: ProductUpdateFormProps) {
   const emptyFormData = {
     name: "",
     price: "",
@@ -22,7 +34,7 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
     stock: "",
     is_Featured: "",
     isAvaliable: "",
-  }
+  };
   const [imageUrl, setImageUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
@@ -41,16 +53,12 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
       Object.entries(formData).filter(([_, value]) => value !== "")
     );
     try {
-      const response = await service.patch(
-        `/products/${productId}`,
-        sanitizedData
-      );
-      setSuccessMessage("Product updated successfully")
-      setOpenSnackbar(true)
-      setFormData(emptyFormData)
-      console.log("Product updated", response);
+      await service.patch(`/products/${productId}`, sanitizedData);
+      setSuccessMessage("Product updated successfully");
+      setOpenSnackbar(true);
+      setFormData(emptyFormData);
     } catch (error) {
-      console.log("was not able to update products", error);
+      console.error("was not able to update products", error);
     }
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,16 +68,17 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
       [name]: value,
     }));
   };
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
     if (!files || files.length === 0) {
       return;
     }
-    const file = files[0]
+    const file = files[0];
     setIsUploading(true);
     const uploadData = new FormData();
     uploadData.append("image", file);
-    console.log(file);
     try {
       const response = await service.post(
         `${import.meta.env.VITE_SERVER_URL}/api/upload/`,
@@ -86,25 +95,34 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
     }
   };
   const inputStyles = {
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: "black",
       },
     },
-    '& .MuiInputLabel-root': {
-      '&.Mui-focused': {
+    "& .MuiInputLabel-root": {
+      "&.Mui-focused": {
         color: "#eb851e",
       },
     },
   };
   return (
-    <Container sx={{display: "flex", maxWidth:"600px", flexDirection:"column", mx:"auto", gap:1, mb:3}} >
+    <Container
+      sx={{
+        display: "flex",
+        maxWidth: "600px",
+        flexDirection: "column",
+        mx: "auto",
+        gap: 1,
+        mb: 3,
+      }}
+    >
       <Box
         component="form"
         onSubmit={handleFormSubmit}
         sx={{
           maxWidth: "400px",
-          mx: "auto", 
+          mx: "auto",
           display: "flex",
           flexDirection: "column",
           gap: 1,
@@ -211,7 +229,11 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
             fullWidth
           />
         </Box>
-        {isUploading ? <><h3>... uploading image</h3> <CircularProgress color="secondary"/> </>: null}
+        {isUploading ? (
+          <>
+            <h3>... uploading image</h3> <CircularProgress color="secondary" />{" "}
+          </>
+        ) : null}
         {imageUrl ? (
           <Box>
             <img src={imageUrl} alt="img" width={200} />
@@ -221,7 +243,12 @@ function ProductUpdateForm({ productId, handleDelete,setSuccessMessage,setOpenSn
           Submit
         </Button>
       </Box>
-      <Button variant="contained" color="warning" onClick={handleDelete} sx={{ width:"400px", mx:"auto"}}>
+      <Button
+        variant="contained"
+        color="warning"
+        onClick={handleDelete}
+        sx={{ width: "400px", mx: "auto" }}
+      >
         Delete product
       </Button>
     </Container>

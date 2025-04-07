@@ -97,7 +97,6 @@ function MainPage() {
       } else if (type === "featuredItems") {
         setFeaturedItems(response.data.products);
       }
-      console.log(response.data);
     } catch (error) {}
   };
   if (!newArrivals.length || !popularItems.length || !featuredItems.length) {

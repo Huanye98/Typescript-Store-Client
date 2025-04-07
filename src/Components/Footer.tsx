@@ -1,6 +1,31 @@
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import { useState } from "react";
+import service from "../service/service.config";
 function Footer() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const subscribeToNewsletter = async ()=>{
+    setError("");
+    setSuccess("");
+    if (!email.trim()|| !emailRegex.test(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+    try {
+      await service.post("/users/newsletter/subscribe",{email:email})
+      setSuccess("Successfully subscribed!");
+      setEmail("");
+    } catch (error) {
+      console.error(error)
+      setError("Subscription failed. Please try again.");
+      console.error("Newsletter subscription error:", error);
+    }
+  }
+
+
   return (
     <Box
       sx={{
@@ -32,9 +57,24 @@ function Footer() {
           <Typography variant="h4">Subscribe to our newsletter</Typography>
           <Typography variant="body2">"Don’t miss out—join our squad for fresh drops, cool perks, and all the good vibes straight to your inbox!"</Typography>
           <Box sx={{display:"flex", gap:1}}>
-          <TextField />
-          <Button variant="contained" sx={{height:"60px"}}> <SendIcon/> </Button>
+          <TextField
+              value={email}
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              variant="outlined"
+              error={!!error}
+              helperText={error}
+              aria-label="Email input"
+              sx={{ flex: 1 }}
+            />
+          <Button variant="contained" sx={{height:"60px"}} onClick={subscribeToNewsletter} aria-label="Subscribe"> <SendIcon/> </Button>
           </Box>
+          {success && (
+            <Typography variant="body2" color="success.main">
+              {success}
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -67,7 +107,7 @@ function Footer() {
       </Box>
       <Divider />
       <Typography variant="body1" sx={{ textAlign: "center" }}>
-        © {new Date().getFullYear()} Copyright © 2025 Canvas&Chaos.  All rights reserved.
+      © {new Date().getFullYear()} Canvas&Chaos. All rights reserved.
       </Typography>
     </Box>
   );

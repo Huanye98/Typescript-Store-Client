@@ -37,14 +37,13 @@ function Store() {
           if (value !== "") params[key] = value;
         });
       }
-      console.log(params);
       const response = await service.get("/products", { params });
 
       setProducts(response.data.products);
       setTotalPages(Math.ceil(response.data.totalCount / 10));
       setIsLoading(false);
     } catch (error) {
-      console.log("was not able to get products", error);
+      console.error("was not able to get products", error);
     }
   };
 

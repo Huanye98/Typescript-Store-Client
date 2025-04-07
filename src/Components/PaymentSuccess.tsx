@@ -19,8 +19,6 @@ const PaymentSuccess = () => {
   }, []);
 
   const handleUseEffect = async () => {
-    // below is a way to extract queries from the search queries.
-    // unfortunately, react-router-dom doesn't come with a proper way to extract them, similar to useParams
     const clientSecret = new URLSearchParams(location.search).get(
       "payment_intent_client_secret"
     );
@@ -38,7 +36,6 @@ const PaymentSuccess = () => {
         `${import.meta.env.VITE_SERVER_URL}/api/payment/update-payment-intent`,
         paymentIntentInfo
       );
-      // !IMPORTANT: Adapt the request structure to the one in your project (services, .env, auth, etc...)
       emptyCart();
       setIsFetching(false);
     } catch (error) {
@@ -48,9 +45,8 @@ const PaymentSuccess = () => {
   const emptyCart = async ()=>{
     try {
       await service.delete(`/users/cart/${loggedUserCartId}`)
-      console.log("cart emptied")
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   if (isFetching) {

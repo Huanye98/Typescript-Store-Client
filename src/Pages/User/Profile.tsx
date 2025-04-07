@@ -37,7 +37,6 @@ function Profile() {
     try {
       const response = await service.get(`/users/${loggedUserId}`);
       setUserData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("was not able to get user data", error);
     }

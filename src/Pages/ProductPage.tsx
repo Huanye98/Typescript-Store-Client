@@ -73,12 +73,10 @@ function ProductPage() {
       return;
     }
     try {
-      console.log("Deleting product with ID:", productId);
       await service.delete(`/products/${productId}`);
-      console.log("product deleted");
       navigate("/store");
     } catch (error) {
-      console.log("Was not able to delete product", error);
+      console.error("Was not able to delete product", error);
     }
   };
   const handleDelete = () => {
@@ -102,7 +100,7 @@ function ProductPage() {
       setSuccessMessage("Product added to cart");
       setOpenSnackbar(true);
     } catch (error) {
-      console.log("was not able to add to cart", error);
+      console.error("was not able to add to cart", error);
     }
   };
   const fetchProductData = async (fetchId: number) => {
@@ -110,7 +108,6 @@ function ProductPage() {
       const filters = { id: fetchId };
       const response = await service.get("/products/", { params: filters });
       setProductData(response.data.products[0]);
-      console.log(response);
       fetchRelatedProducts(response.data.products[0].category);
       setIsLoading(false);
     } catch (error) {
@@ -125,9 +122,8 @@ function ProductPage() {
         params: { category: relatedCategory, limit: 6 },
       });
       setRelatedProducts(response.data.products);
-      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   const handleCloseSnackbar = () => {
