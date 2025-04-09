@@ -77,6 +77,7 @@ function Store() {
       >
         <img
           rel="preload"
+          loading="eager"
           src="/storeBanner.webp"
           alt="wide banner with pastel colors"
         />
