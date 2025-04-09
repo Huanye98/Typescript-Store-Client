@@ -59,7 +59,9 @@ const StoreFilters: React.FC<StorefilersProps> = ({
       setPage(1);
       setProducts(response.data.products);
       setFilterData({
-        sort: "", category: "", isavaliable: ""
+        sort: "",
+        category: "",
+        isavaliable: "",
       });
     } catch (error) {
       console.error("failed to get filtered products", error);
@@ -71,7 +73,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
       xs: "100%",
       sm: "auto",
     },
-    minWidth: {sm: "100px"},
+    minWidth: { sm: "100px" },
     height: "80%",
     top: "5px",
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -106,7 +108,11 @@ const StoreFilters: React.FC<StorefilersProps> = ({
       >
         {/* Sort by Dropdown */}
         <FormControl>
-          <InputLabel id="sort-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+          <InputLabel
+            id="sort-label"
+            shrink
+            sx={{ "&.Mui-focused": { color: "#eb851e" } }}
+          >
             Sort by
           </InputLabel>
           <Select
@@ -133,7 +139,11 @@ const StoreFilters: React.FC<StorefilersProps> = ({
 
         {/* Category Dropdown */}
         <FormControl>
-          <InputLabel id="category-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+          <InputLabel
+            id="category-label"
+            shrink
+            sx={{ "&.Mui-focused": { color: "#eb851e" } }}
+          >
             Category
           </InputLabel>
           <Select
@@ -156,7 +166,11 @@ const StoreFilters: React.FC<StorefilersProps> = ({
 
         {/* Availability Dropdown */}
         <FormControl>
-          <InputLabel id="availability-label" shrink sx={{ "&.Mui-focused": {color: "#eb851e"}}}>
+          <InputLabel
+            id="availability-label"
+            shrink
+            sx={{ "&.Mui-focused": { color: "#eb851e" } }}
+          >
             Availability
           </InputLabel>
           <Select
@@ -173,7 +187,7 @@ const StoreFilters: React.FC<StorefilersProps> = ({
             <MenuItem value="false">Not Available</MenuItem>
           </Select>
         </FormControl>
-        
+
         <Button
           type="submit"
           variant="contained"
@@ -195,7 +209,9 @@ const StoreFilters: React.FC<StorefilersProps> = ({
           }}
           onClick={() => {
             setFilterData({
-              sort: "", category: "", isavaliable: ""
+              sort: "",
+              category: "",
+              isavaliable: "",
             });
             setTimeout(() => {
               sendFilters();

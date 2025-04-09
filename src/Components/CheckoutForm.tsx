@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   PaymentElement,
   useStripe,
-  useElements
+  useElements,
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { CircularProgress } from "@mui/material";
@@ -12,10 +12,8 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-
-  const [message, setMessage] = useState<string|null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
 
   useEffect(() => {
     if (!stripe) {
@@ -34,7 +32,7 @@ function CheckoutForm() {
       switch (paymentIntent?.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-  
+
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -48,7 +46,6 @@ function CheckoutForm() {
       }
     });
   }, [stripe]);
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,16 +73,21 @@ function CheckoutForm() {
   };
 
   const paymentElementOptions: StripePaymentElementOptions = {
-    layout: "tabs"
-  }
+    layout: "tabs",
+  };
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"><CircularProgress color="secondary"/></div> : "Pay now"}
+          {isLoading ? (
+            <div className="spinner" id="spinner">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
       {message && <div id="payment-message">{message}</div>}

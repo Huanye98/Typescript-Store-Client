@@ -59,9 +59,12 @@ const SignUp = () => {
     }
     try {
       await service.post("/users/create", userData);
-      await service.post("/users/send-verification-email", {email: userData.email});
+      await service.post("/users/send-verification-email", {
+        email: userData.email,
+      });
       setSuccessMessage(
-        "Registration successful! Please check your email for verification.")
+        "Registration successful! Please check your email for verification."
+      );
       setOpenSuccessSnackbar(true);
     } catch (error: any) {
       console.error(error);
@@ -89,13 +92,13 @@ const SignUp = () => {
     register(formData);
   }
   const inputStyles = {
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'black',
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "black",
       },
     },
-    '& .MuiInputLabel-root': {
-      '&.Mui-focused': {
+    "& .MuiInputLabel-root": {
+      "&.Mui-focused": {
         color: "#eb851e",
       },
     },
@@ -103,7 +106,7 @@ const SignUp = () => {
   return (
     <>
       <Nav />
-      <Container >
+      <Container>
         <form onSubmit={handleSubmit}>
           <Box
             display="flex"
@@ -114,7 +117,6 @@ const SignUp = () => {
               width: "50%",
               justifySelf: "center",
               margin: "200px 0",
-              
             }}
           >
             <TextField
@@ -150,8 +152,13 @@ const SignUp = () => {
               fullWidth
               sx={inputStyles}
             />
-            
-            <Button type="submit" variant="contained"  sx={{ "&:hover": { backgroundColor: "secondary.main" } }} fullWidth>
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ "&:hover": { backgroundColor: "secondary.main" } }}
+              fullWidth
+            >
               {loading ? "Signing up ..." : "Sign Up"}
             </Button>
           </Box>

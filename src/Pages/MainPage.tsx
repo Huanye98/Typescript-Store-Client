@@ -1,6 +1,6 @@
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
-import { useEffect, useState,} from "react";
+import { useEffect, useState } from "react";
 import service from "../service/service.config";
 import {
   Box,
@@ -36,7 +36,6 @@ function MainPage() {
   const [newArrivals, setNewArrivals] = useState([]);
   const [popularItems, setPopularItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
-
 
   const settings = {
     dots: true,
@@ -87,7 +86,7 @@ function MainPage() {
     fetchMainPageData(featuredQuery, "featuredItems");
   }, []);
 
-  const fetchMainPageData = async (query:QueryParams, type:string) => {
+  const fetchMainPageData = async (query: QueryParams, type: string) => {
     try {
       const response = await service.get("/products", { params: query });
       if (type === "newArrivals") {
@@ -120,17 +119,20 @@ function MainPage() {
     <>
       <Nav />
       <Box>
-        <Box className="landingImage" sx={{width:'100%', mb:5}}>
+        <Box className="landingImage" sx={{ width: "100%", mb: 5 }}>
           <img src="/web banner.webp" alt="" style={{ width: "100%" }} />
         </Box>
 
         <Box className="landingScrollingText"></Box>
-        <Typography variant="h3" sx={{ml:"15px"}}> New Arrivals</Typography>
+        <Typography variant="h3" sx={{ ml: "15px" }}>
+          {" "}
+          New Arrivals
+        </Typography>
         <Box style={style}>
-          <Slider {...settings} >
-            {newArrivals.map((product:Product, index) => {
+          <Slider {...settings}>
+            {newArrivals.map((product: Product, index) => {
               return (
-                <Card key={index} sx={{width:'300px !important'}}>
+                <Card key={index} sx={{ width: "300px !important" }}>
                   <Link to={`/store/${product.id}`}>
                     <CardMedia component="img" image={product.imageurl} />
                   </Link>
@@ -144,17 +146,52 @@ function MainPage() {
             })}
           </Slider>
         </Box>
-        <Box sx={{mt:5,}}>
-          <Typography variant="h3" sx={{ml:"15px"}}>Featured Collection</Typography>
+        <Box sx={{ mt: 5 }}>
+          <Typography variant="h3" sx={{ ml: "15px" }}>
+            Featured Collection
+          </Typography>
           <img src="/web banner2.webp" alt="" style={{ width: "100%" }} />
         </Box>
-        <Typography variant="h3" sx={{ml:"15px"}}>Featured </Typography>
+        <Typography variant="h3" sx={{ ml: "15px" }}>
+          Featured{" "}
+        </Typography>
         <Box sx={style}>
-        <Slider {...settings} >
-          {featuredItems.length > 0 ? (
-            featuredItems.map((product:Product, index) => {
+          <Slider {...settings}>
+            {featuredItems.length > 0 ? (
+              featuredItems.map((product: Product, index) => {
+                return (
+                  <Card key={index} sx={{ width: "300px !important" }}>
+                    <Link to={`/store/${product.id}`}>
+                      <CardMedia component="img" image={product.imageurl} />
+                      <CardContent>
+                        <Typography>{product.name}</Typography>
+                        <Typography variant="body2">
+                          Shop now <ArrowOutwardIcon />
+                        </Typography>
+                      </CardContent>
+                    </Link>
+                  </Card>
+                );
+              })
+            ) : (
+              <Typography sx={{ ml: "15px" }}> no products</Typography>
+            )}
+          </Slider>
+        </Box>
+        <Box sx={{ mt: 5 }}>
+          <a href={"/about"}>
+            <Typography variant="h3" sx={{ ml: "15px" }}>
+              About us
+            </Typography>
+            <img src="/web banner3.webp" alt="" style={{ width: "100%" }} />
+          </a>
+        </Box>
+        <Box sx={style}>
+          <Typography variant="h3"> Hot!</Typography>
+          <Slider {...settings}>
+            {popularItems.map((product: Product, index) => {
               return (
-                <Card key={index} sx={{width:'300px !important'}}>
+                <Card key={index} sx={{ width: "300px !important" }}>
                   <Link to={`/store/${product.id}`}>
                     <CardMedia component="img" image={product.imageurl} />
                     <CardContent>
@@ -166,39 +203,8 @@ function MainPage() {
                   </Link>
                 </Card>
               );
-            })
-          ) : (
-            <Typography sx={{ml:"15px"}}> no products</Typography>
-          )}
-        </Slider>
-          </Box>
-        <Box sx={{mt:5}} >
-          <a href={"/about"}>
-          <Typography variant="h3" sx={{ml:"15px"}}>
-          About us
-          </Typography>
-          <img src="/web banner3.webp" alt="" style={{ width: "100%" }} />
-          </a>
-        </Box>
-        <Box sx={style}>
-        <Typography variant="h3"> Hot!</Typography>
-        <Slider {...settings} >
-          {popularItems.map((product:Product, index) => {
-            return (
-              <Card key={index} sx={{width:'300px !important'}} >
-                <Link to={`/store/${product.id}`}>
-                  <CardMedia component="img" image={product.imageurl} />
-                  <CardContent>
-                    <Typography>{product.name}</Typography>
-                    <Typography variant="body2">
-                      Shop now <ArrowOutwardIcon />
-                    </Typography>
-                  </CardContent>
-                </Link>
-              </Card>
-            );
-          })}
-        </Slider>
+            })}
+          </Slider>
         </Box>
       </Box>
       <Footer />

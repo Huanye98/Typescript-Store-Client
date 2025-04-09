@@ -1,5 +1,5 @@
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import service from "../service/service.config";
 function Footer() {
@@ -7,37 +7,36 @@ function Footer() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const subscribeToNewsletter = async ()=>{
+  const subscribeToNewsletter = async () => {
     setError("");
     setSuccess("");
-    if (!email.trim()|| !emailRegex.test(email)) {
+    if (!email.trim() || !emailRegex.test(email)) {
       setError("Please enter a valid email.");
       return;
     }
     try {
-      await service.post("/users/newsletter/subscribe",{email:email})
+      await service.post("/users/newsletter/subscribe", { email: email });
       setSuccess("Successfully subscribed!");
       setEmail("");
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setError("Subscription failed. Please try again.");
       console.error("Newsletter subscription error:", error);
     }
-  }
-
+  };
 
   return (
     <Box
       sx={{
         backgroundColor: "#dedad5",
         width: "100%",
-        mt:5,
+        mt: 5,
         padding: 2,
         gap: 2,
         bottom: 0,
         position: "relative",
         display: "flex",
-        flexDirection:  "column",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -53,11 +52,14 @@ function Footer() {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{display:"flex", flexDirection:"column", gap:2}}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography variant="h4">Subscribe to our newsletter</Typography>
-          <Typography variant="body2">"Don’t miss out—join our squad for fresh drops, cool perks, and all the good vibes straight to your inbox!"</Typography>
-          <Box sx={{display:"flex", gap:1}}>
-          <TextField
+          <Typography variant="body2">
+            "Don’t miss out—join our squad for fresh drops, cool perks, and all
+            the good vibes straight to your inbox!"
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <TextField
               value={email}
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -68,7 +70,15 @@ function Footer() {
               aria-label="Email input"
               sx={{ flex: 1 }}
             />
-          <Button variant="contained" sx={{height:"60px"}} onClick={subscribeToNewsletter} aria-label="Subscribe"> <SendIcon/> </Button>
+            <Button
+              variant="contained"
+              sx={{ height: "60px" }}
+              onClick={subscribeToNewsletter}
+              aria-label="Subscribe"
+            >
+              {" "}
+              <SendIcon />{" "}
+            </Button>
           </Box>
           {success && (
             <Typography variant="body2" color="success.main">
@@ -107,7 +117,7 @@ function Footer() {
       </Box>
       <Divider />
       <Typography variant="body1" sx={{ textAlign: "center" }}>
-      © {new Date().getFullYear()} Canvas&Chaos. All rights reserved.
+        © {new Date().getFullYear()} Canvas&Chaos. All rights reserved.
       </Typography>
     </Box>
   );

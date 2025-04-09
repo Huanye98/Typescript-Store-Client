@@ -12,7 +12,7 @@ interface ProductDetails {
   currency: string;
   amount: number;
 }
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); 
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 function PaymentIntent({ productDetails }: { productDetails: ProductDetails }) {
   const [clientSecret, setClientSecret] = useState("");

@@ -44,7 +44,7 @@ function About() {
     <>
       <Nav />
 
-      <Box sx={{display:"flex", flexDirection:"column", gap:4}}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <Box sx={{ top: "30px", margin: "30px 0", position: "sticky" }}>
           <Typography
             variant="h2"
@@ -116,25 +116,24 @@ function About() {
           >
             {artists.map((e, index) => (
               <Card key={index}>
-               
                 <CardMedia
                   component="img"
                   image={e.image}
-                  sx={{ width: "100%" }} 
+                  sx={{ width: "100%" }}
                 />
                 <CardContent>
                   <Typography variant="h4">{e.name}</Typography>
                   <Typography>{e.description}</Typography>
                   <Box sx={{ display: "flex", gap: 1 }}>
-                  <InstagramIcon />
-                  <Link
-                    href={e.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{ color: "purple" }}
-                  >
-                    {e.name}
-                  </Link>
+                    <InstagramIcon />
+                    <Link
+                      href={e.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ color: "purple" }}
+                    >
+                      {e.name}
+                    </Link>
                   </Box>
                 </CardContent>
               </Card>

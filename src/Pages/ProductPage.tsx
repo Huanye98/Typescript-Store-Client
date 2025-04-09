@@ -62,9 +62,8 @@ function ProductPage() {
     margin: "10px auto",
   };
   useEffect(() => {
-    if(!productId) return;
+    if (!productId) return;
     fetchProductData(parseInt(productId));
-    
   }, [productId]);
 
   const deleteProduct = async () => {
@@ -130,11 +129,19 @@ function ProductPage() {
     setOpenSnackbar(false);
   };
   if (isLoading === true || productData === null) {
-    return(
-        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <h2>Loading product</h2>
         <CircularProgress color="secondary" />
-        </Box>)
+      </Box>
+    );
   }
   if (error) {
     return <p>error</p>;
@@ -146,9 +153,23 @@ function ProductPage() {
     <>
       <Nav />
       <Container>
-        <Box sx={{display:"flex", flexDirection:{xs:"column", md:"row"}}} >
+        <Box
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+        >
           {/* Left */}
-          <Box flex={1} sx={{ maxWidth: {xs:"90%", md:"50%"} , display: "flex", flexDirection:{ xs:"row",md: "column", justifyContent:"space-between"}, gap: 2}}>
+          <Box
+            flex={1}
+            sx={{
+              maxWidth: { xs: "90%", md: "50%" },
+              display: "flex",
+              flexDirection: {
+                xs: "row",
+                md: "column",
+                justifyContent: "space-between",
+              },
+              gap: 2,
+            }}
+          >
             <Typography variant="h2">{productData.name}</Typography>
             <img
               src={productData.imageurl}
@@ -162,7 +183,7 @@ function ProductPage() {
           <Box
             flex={1}
             sx={{
-              maxWidth: {xs:"100%", md:"50%"},
+              maxWidth: { xs: "100%", md: "50%" },
               justifyContent: "space-evenly",
               display: "flex",
               flexDirection: "column",
@@ -250,13 +271,8 @@ function ProductPage() {
         <Box sx={style}>
           <Typography>Related products</Typography>
           <Slider {...settings}>
-            {relatedProducts.map((product:ProductPageProps) => {
-              return (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                />
-              );
+            {relatedProducts.map((product: ProductPageProps) => {
+              return <ProductCard key={product.id} product={product} />;
             })}
           </Slider>
         </Box>

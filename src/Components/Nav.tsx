@@ -114,13 +114,13 @@ function Nav() {
         }}
       >
         {isLoading && (
-          <Alert severity="info" sx={{zIndex:9999}}>
+          <Alert severity="info" sx={{ zIndex: 9999 }}>
             <Typography>Loading...</Typography>
             <CircularProgress color="secondary" />
           </Alert>
         )}
         {error && (
-          <Alert severity="error" sx={{zIndex:9999}}>
+          <Alert severity="error" sx={{ zIndex: 9999 }}>
             <Typography>error</Typography>
           </Alert>
         )}
@@ -133,7 +133,7 @@ function Nav() {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          px:{xs:1, sm:1, md:3},
+          px: { xs: 1, sm: 1, md: 3 },
         }}
       >
         <Box>
@@ -144,7 +144,7 @@ function Nav() {
             />
           </Link>
         </Box>
-        <Box sx={{ display: "flex", gap: 2 ,mr:1}}>
+        <Box sx={{ display: "flex", gap: 2, mr: 1 }}>
           <Link to={"/"}>
             <Typography>Main</Typography>
           </Link>
@@ -182,16 +182,16 @@ function Nav() {
         {/* Searchbar +  Aut */}
         {isSmallScreen ? (
           <>
-          <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
-            <MenuIcon />
-          </IconButton>
+            <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
+              <MenuIcon />
+            </IconButton>
             {isDrawerOpen && (
               <List
                 sx={{
                   position: "absolute",
-                  top: {xs:"54px", sm:"64px"},
-                  left:0,
-                  width:"100%",
+                  top: { xs: "54px", sm: "64px" },
+                  left: 0,
+                  width: "100%",
                   backgroundColor: "white",
                   boxShadow: 2,
                   display: "flex",
@@ -206,7 +206,7 @@ function Nav() {
                         <ListItemText>Login</ListItemText>
                       </ListItem>
                     </Link>
-                    <Divider sx={{width:"100%"}} />
+                    <Divider sx={{ width: "100%" }} />
                     <Link to={"/signup"}>
                       <ListItem>
                         <ListItemText>signup</ListItemText>
@@ -229,7 +229,7 @@ function Nav() {
         ) : (
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             {/* SearchBr */}
-            <Box >
+            <Box>
               <TextField
                 variant="outlined"
                 type="text"
@@ -291,7 +291,7 @@ function Nav() {
                     flexDirection: "row",
                   }}
                 >
-                  <Link to={"/login"} >
+                  <Link to={"/login"}>
                     <Button
                       variant="contained"
                       sx={{ color: "black", width: "100px", padding: "5px" }}

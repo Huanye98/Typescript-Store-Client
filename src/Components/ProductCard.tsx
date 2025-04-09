@@ -16,10 +16,19 @@ interface ProductCardComponentProps {
 }
 
 const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
-  const { id, name, imageurl, finalPrice, category, isavaliable, stock, discountvalue, price } =
-    product;
+  const {
+    id,
+    name,
+    imageurl,
+    finalPrice,
+    category,
+    isavaliable,
+    stock,
+    discountvalue,
+    price,
+  } = product;
 
-  const { fetchCart, addToCart, loggedUserId, loggedUserCartId,isAdmin } =
+  const { fetchCart, addToCart, loggedUserId, loggedUserCartId, isAdmin } =
     useContext(AuthContext);
   return (
     <Card
@@ -45,7 +54,7 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
           <CardMedia
             component="img"
             image={imageurl}
-            sx={{ objectFit: "cover" ,width:"100% "}}
+            sx={{ objectFit: "cover", width: "100% " }}
             alt={name}
           />
         )}
@@ -91,43 +100,44 @@ const ProductCard: React.FC<ProductCardComponentProps> = ({ product }) => {
                 fontSize: "0.8rem",
               }}
             >
-              <span><s>{price}€</s> {discountvalue*100}% off</span>
-
+              <span>
+                <s>{price}€</s> {discountvalue * 100}% off
+              </span>
             </Typography>
-            
           )}
           <Typography>{finalPrice.toFixed(2)}€</Typography>
         </CardContent>
       </Link>
-      {!isAdmin && ( stock > 0 && isavaliable ? 
-        (<Button
-          variant="contained"
-          fullWidth
-          sx={{
-            "&:hover": { backgroundColor: "secondary.main" },
-          }}
-          onClick={() => {
-            if (loggedUserId !== null && loggedUserCartId !== null) {
-              addToCart(Number(id), 1, loggedUserId, loggedUserCartId);
-              fetchCart(loggedUserId);
-            } else {
-              console.error("loggedUserId or loggedUserCartId is null");
-            }
-          }}
-        >
-          Add to cart
-        </Button>): 
-        (<Button
-          variant="contained"
-          fullWidth
-          sx={{
-            "&:hover": { backgroundColor: "#d32f2f" },
-          }}>
-          Out of stock
-          </Button>)
-      )
-      } 
-      
+      {!isAdmin &&
+        (stock > 0 && isavaliable ? (
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              "&:hover": { backgroundColor: "secondary.main" },
+            }}
+            onClick={() => {
+              if (loggedUserId !== null && loggedUserCartId !== null) {
+                addToCart(Number(id), 1, loggedUserId, loggedUserCartId);
+                fetchCart(loggedUserId);
+              } else {
+                console.error("loggedUserId or loggedUserCartId is null");
+              }
+            }}
+          >
+            Add to cart
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              "&:hover": { backgroundColor: "#d32f2f" },
+            }}
+          >
+            Out of stock
+          </Button>
+        ))}
     </Card>
   );
 };

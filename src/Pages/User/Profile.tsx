@@ -2,31 +2,45 @@ import Nav from "../../Components/Nav";
 import { AuthContext } from "../../context/auth.contex";
 import { useContext, useEffect, useState } from "react";
 import service from "../../service/service.config";
-import { Box,DialogTitle,DialogContentText,DialogActions, TextField, Button, Alert, Snackbar, CircularProgress, Dialog, DialogContent } from "@mui/material";
+import {
+  Box,
+  DialogTitle,
+  DialogContentText,
+  DialogActions,
+  TextField,
+  Button,
+  Alert,
+  Snackbar,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 
 interface form {
   password: string;
   repeatPassword: string;
   address: string;
   email: string;
+  name: string;
 }
 interface UserData {
   user_email: string;
   address: string;
+  name: string;
 }
 function Profile() {
   const { loggedUserId, authenticateUser } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [userData, setUserData] = useState<UserData|null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [formData, setFormData] = useState<form>({
     email: "",
     password: "",
     repeatPassword: "",
     address: "",
+    name: "",
   });
   const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
@@ -67,23 +81,25 @@ function Profile() {
       return;
     }
     const payload = { [field]: formData[field] };
-
     try {
       await service.patch(`/users/modify/${loggedUserId}`, payload);
 
       setErrorMessage("");
       let successText = "";
-    if (field === "password") successText = "Password updated successfully";
-    else if (field === "address") successText = "Address updated successfully";
-    else if (field === "email") successText = "Email updated successfully";
+      if (field === "password") successText = "Password updated successfully";
+      else if (field === "address")
+        successText = "Address updated successfully";
+      else if (field === "email") successText = "Email updated successfully";
+      else if (field === "name")
+        successText = "Name updated successfully";
       setSuccessMessage(successText);
       setOpenSnackbar(true);
     } catch (error) {
       console.error("Was not able to updata user information", error);
       setSuccessMessage("");
 
-    setErrorMessage("Failed to update. Please try again.");
-    setOpenSnackbar(true);
+      setErrorMessage("Failed to update. Please try again.");
+      setOpenSnackbar(true);
     }
   };
   const deleteAccount = async () => {
@@ -93,32 +109,33 @@ function Profile() {
       setOpenSnackbar(true);
       return;
     }
-    try { 
-       await service.delete(`/users/${loggedUserId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-       );
+    try {
+      await service.delete(`/users/${loggedUserId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setErrorMessage("");
       setSuccessMessage("Account deleted successfully.");
       setOpenSnackbar(true);
       setTimeout(() => {
         localStorage.removeItem("token");
         authenticateUser();
-        navigate("/login"); 
-      }, 1500); 
-    }
-    catch (error) {
+        navigate("/login");
+      }, 1500);
+    } catch (error) {
       console.error("Failed to delete account", error);
       setSuccessMessage("");
       setErrorMessage("Failed to delete account. Please try again.");
       setOpenSnackbar(true);
     }
-  }
-  const handleOpenDialog = () => {setOpenDialog(true);}
-  const handleCloseDialog = () => {setOpenDialog(false);}
+  };
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -131,10 +148,18 @@ function Profile() {
   };
   if (!userData) {
     return (
-        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <h2>Loading</h2>
         <CircularProgress color="secondary" />
-        </Box>)
+      </Box>
+    );
   }
 
   return (
@@ -164,16 +189,16 @@ function Profile() {
         }}
       >
         <Box>
-          <label htmlFor="email">Email:</label>
           <TextField
+          label="Email"
             type="email"
             value={formData.email}
             onChange={handleInputChange}
             id="email"
             name="email"
             defaultValue={userData.user_email}
-            fullWidth // Ensures the width of the input spans the entire container
-            sx={{ marginBottom: 2 }} // Optional: Adds margin for spacing
+            fullWidth
+            sx={{ marginBottom: 2 }}
           />
           <Button variant="contained" onClick={() => changeData("email")}>
             Change email
@@ -181,9 +206,10 @@ function Profile() {
         </Box>
 
         <Box>
-          <label htmlFor="address">Address:</label>
+          
           {userData.address && <p>{userData.address}</p>}
           <TextField
+          label="Full Address"
             type="text"
             value={formData.address}
             onChange={handleInputChange}
@@ -198,8 +224,25 @@ function Profile() {
         </Box>
 
         <Box>
-          <label htmlFor="password">Password:</label>
+          {userData.name && <p>{userData.name}</p>}
           <TextField
+            label="Full Name"
+            type="text"
+            value={formData.name}
+            onChange={handleInputChange}
+            id="name"
+            name="name"
+            fullWidth
+            sx={{ marginBottom: 2 }}
+          />
+          <Button variant="contained" onClick={() => changeData("name")}>
+            Change Name
+          </Button>
+        </Box>
+        <Box>
+          
+          <TextField
+          label="Password"
             type="password"
             value={formData.password}
             onChange={handleInputChange}
@@ -208,9 +251,8 @@ function Profile() {
             fullWidth
             sx={{ marginBottom: 2 }}
           />
-
-          <label htmlFor="repeatPassword">Repeat password:</label>
           <TextField
+          label="Repeat Password"
             type="password"
             value={formData.repeatPassword}
             onChange={handleInputChange}
@@ -228,19 +270,20 @@ function Profile() {
         <Button variant="contained" onClick={handleOpenDialog} color="error">
           Delete account
         </Button>
-        <Dialog open = {openDialog} onClose={handleCloseDialog}>
+        <Dialog open={openDialog} onClose={handleCloseDialog}>
           <DialogTitle> Confirm Account Deletion</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete your account? This action cannot be undone.
+              Are you sure you want to delete your account? This action cannot
+              be undone.
             </DialogContentText>
             <DialogActions>
-              <Button  color="warning" onClick={handleCloseDialog}>
+              <Button color="warning" onClick={handleCloseDialog}>
                 Cancel
-                </Button>
-                <Button onClick={deleteAccount} color="error">
+              </Button>
+              <Button onClick={deleteAccount} color="error">
                 Delete
-                </Button>
+              </Button>
             </DialogActions>
           </DialogContent>
         </Dialog>

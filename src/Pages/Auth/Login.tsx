@@ -38,7 +38,7 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       await authenticateUser();
       navigate("/store");
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
         if (
           error.response.status === 401 &&

@@ -55,7 +55,6 @@ function Cart() {
       const fetchedCart = response.data.response[0].cart_items;
       setCart(fetchedCart);
       setUserData(response.data.response[0]);
-
       //stripè data set up
       const totalAmount =
         fetchedCart.reduce((acc: number, item: Item) => {
@@ -167,7 +166,11 @@ function Cart() {
                     sx={{ width: "40%" }}
                   />
                   <CardContent
-                    sx={{ display: "flex", flexDirection: "column", gap: "15px" }}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "15px",
+                    }}
                   >
                     <Link to={`/store/${e.product_id}`}>
                       <p>{e.product_name}</p>
@@ -258,7 +261,7 @@ function Cart() {
           sx={{
             backgroundColor: "white",
             position: { xs: "sticky", sm: "sticky", md: "relative" },
-            top:{xs: "63px", sm: "63px", md: "auto"},
+            top: { xs: "63px", sm: "63px", md: "auto" },
             width: { xs: "100%", md: "auto" },
             height: { xs: "auto", md: "100%" },
             mt: "25px",
@@ -268,15 +271,22 @@ function Cart() {
         >
           <Box sx={{ mb: "15px" }}>
             <p>Total price: {userData.cartPrice.toFixed(2)} € </p>
-            {/* <p>Address: {userData.user_address} </p>
-            <p>Name: {userData.user_name}</p> */}
+             <p>Address: {userData.user_address} </p>
+            <p>Name: {userData.user_name}</p> 
           </Box>
           <Divider />
-          <Box sx={{ display: "flex", justifyContent: "center", mt: "15px" }}>
-            {showPaymentIntent && stripeData ? (
+          
+          {(!userData.user_name || userData.user_name === "undefined" || !userData.user_address )? (
+            <Typography sx={{ color: "black" }}>
+              Please fill out your address and name in your profile before continuing with checkout 
+            </Typography>
+          ):(
+            <Box sx={{ display: "flex", justifyContent: "center", mt: "15px" }}>
+            {showPaymentIntent && stripeData  ? (
               <PaymentIntent productDetails={stripeData} />
             ) : (
-              <Button
+              userData.cartPrice !== 0 && (
+                <Button
                 variant="contained"
                 sx={{ border: "solid 3px orange" }}
                 onClick={() => {
@@ -286,8 +296,10 @@ function Cart() {
               >
                 Purchase
               </Button>
+            )
             )}
           </Box>
+        )}
         </Box>
       </Box>
     </>

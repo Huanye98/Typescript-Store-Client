@@ -6,7 +6,7 @@ import StoreFilters from "../Components/StoreFilters";
 import { Box, Button, Container } from "@mui/material";
 import ProductCard from "../Components/ProductCard";
 import { Product } from "../Types/Types";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Store() {
   const [products, setProducts] = useState([]);
@@ -49,10 +49,18 @@ function Store() {
 
   if (isLoading) {
     return (
-    <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
-    <h2>Loading</h2>
-    <CircularProgress color="secondary" />
-    </Box>)
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <h2>Loading</h2>
+        <CircularProgress color="secondary" />
+      </Box>
+    );
   }
   if (!products) {
     return <h2>no products</h2>;
@@ -104,7 +112,7 @@ function Store() {
           {/* Pagination */}
           <Box
             sx={{
-              mt:3,
+              mt: 3,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
